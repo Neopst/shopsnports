@@ -1,0 +1,134 @@
+[
+  {
+    "receivedAt": "2025-10-09T07:59:52.825Z",
+    "event": {
+      "provider": "paystack",
+      "body": {
+        "event": "charge.success",
+        "data": {
+          "reference": "test-ref-123",
+          "amount": 1000
+        }
+      },
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-GB) WindowsPowerShell/5.1.19041.6328",
+        "content-type": "application/json",
+        "host": "localhost:3000",
+        "content-length": "76",
+        "expect": "100-continue",
+        "connection": "Keep-Alive"
+      }
+    }
+  },
+  {
+    "receivedAt": "2025-10-09T07:59:53.414Z",
+    "event": {
+      "provider": "flutterwave",
+      "body": {
+        "event": "payment.completed",
+        "data": {
+          "tx_ref": "fw-ref-xyz",
+          "amount": 2500
+        }
+      },
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-GB) WindowsPowerShell/5.1.19041.6328",
+        "content-type": "application/json",
+        "host": "localhost:3000",
+        "content-length": "74",
+        "expect": "100-continue"
+      }
+    }
+  },
+  {
+    "receivedAt": "2025-10-09T08:36:17.563Z",
+    "event": {
+      "provider": "paystack",
+      "body": {},
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-GB) WindowsPowerShell/5.1.19041.6328",
+        "content-type": "application/json",
+        "host": "localhost:3000",
+        "content-length": "76"
+      }
+    }
+  },
+  {
+    "receivedAt": "2025-10-09T08:36:17.659Z",
+    "event": {
+      "provider": "flutterwave",
+      "body": {},
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-GB) WindowsPowerShell/5.1.19041.6328",
+        "content-type": "application/json",
+        "host": "localhost:3000",
+        "content-length": "74"
+      }
+    }
+  },
+  {
+    "receivedAt": "2025-10-09T07:59:52.825Z",
+    "event": {
+      "provider": "paystack",
+      "body": {
+        "event": "charge.success",
+        "data": {
+          "reference": "test-ref-123",
+          "amount": 1000
+        }
+      },
+      "headers": {}
+    }
+  },
+  {
+    "receivedAt": "2025-10-09T07:59:53.414Z",
+    "event": {
+      "provider": "flutterwave",
+      "body": {
+        "event": "payment.completed",
+        "data": {
+          "tx_ref": "fw-ref-xyz",
+          "amount": 2500
+        }
+      },
+      "headers": {}
+    }
+  },
+  {
+    "receivedAt": "2025-10-09T08:36:17.563Z",
+    "event": {
+      "provider": "paystack",
+      "body": {},
+      "headers": {}
+    }
+  },
+  {
+    "receivedAt": "2025-10-09T08:36:17.659Z",
+    "event": {
+      "provider": "flutterwave",
+      "body": {},
+      "headers": {}
+    }
+  },
+  {
+    "receivedAt": "2025-10-09T08:45:20.350Z",
+    "event": {
+      "provider": "paystack",
+      "body": {},
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-GB) WindowsPowerShell/5.1.19041.6328",
+        "content-type": "application/json",
+        "host": "localhost:3000",
+        "content-length": "75"
+      }
+    }
+  },
+  {
+    "receivedAt": "2025-10-09T08:45:20.352Z",
+    "event": {
+      "provider": "paystack",
+      "body": {},
+      "headers": {}
+    }
+  }
+]

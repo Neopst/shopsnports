@@ -1,0 +1,37 @@
+// Firestore security rules template — review and adapt before deploying to
+// production. Replace role checks and collection names to match your data model.
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users collection: users can read and write their own profile
+    match /users/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow update: if request.auth != null && request.auth.uid == userId;
+      allow create: if request.auth != null && request.auth.uid == userId;
+      allow delete: if false; // disallow client-side delete unless explicitly allowed
+    }
+
+    // Admin-only collections: require custom claim 'admin' == true
+    match /admin_notifications/{doc} {
+      allow read, write: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // Vendors: vendors may read their own vendor doc; admins can read/write
+    match /vendors/{vendorId} {
+      allow read: if request.auth != null && (request.auth.uid == resource.data.ownerId || request.auth.token.admin == true);
+      allow update, write: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // Shipment requests: only server or owner may create/modify
+    match /shipment_requests/{req} {
+      allow read: if request.auth != null && (request.auth.uid == resource.data.affiliateId || request.auth.token.admin == true);
+      allow create: if false; // create from client disabled; use server function
+      allow update, delete: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // Default: deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

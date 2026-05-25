@@ -1,0 +1,463 @@
+================================================================================
+                    SHOPSNPORTS PRODUCTION ROADMAP
+                         MILESTONE CHECKLIST
+                        Created: Dec 22, 2025
+================================================================================
+
+TOTAL: 8 MILESTONES | TIMELINE: 4-6 WEEKS | TARGET: PRODUCTION READY
+
+================================================================================
+MILESTONE 1: CODE CLEANUP & TECHNICAL DEBT (Week 1)
+================================================================================
+Priority: CRITICAL | Est: 3-4 days | Status: NOT STARTED
+
+[ ] 1.1 Remove duplicate/temporary files
+    [ ] Delete vendor_dashboard_screen.dart.new
+    [ ] Delete profile_screen.dart.tmp  
+    [ ] Delete main.dart.bak.20251008-184337    C:\projects\shopsnports\lib\screens\vendor_dashboard_screen.dart.new
+
+[ ] 1.2 Clean up imports and dependencies
+    [ ] Remove all unused imports (run flutter analyze)
+    [ ] Remove provider package (keep only flutter_riverpod)
+    [ ] Update all files importing provider to use flutter_riverpod
+    [ ] Verify all dependencies in pubspec.yaml are used
+
+[ ] 1.3 Fix linter warnings
+    [ ] Fix warnings in admin_flutter/lib/main.dart
+    [ ] Enable strict lint rules in analysis_options.yaml
+    [ ] Run flutter analyze and fix all warnings
+    [ ] Run dart fix --apply for auto-fixable issues
+
+[ ] 1.4 Standardize logging
+    [ ] Replace all print() calls with debugPrint()
+    [ ] Remove debug prints from production code
+    [ ] Create centralized logging utility
+    [ ] Implement conditional logging (debug vs release)
+
+[ ] 1.5 Code formatting
+    [ ] Run flutter format . on entire codebase
+    [ ] Ensure consistent naming conventions
+    [ ] Add missing file headers/documentation
+
+DELIVERABLE: Clean codebase with zero analyzer warnings
+
+================================================================================
+MILESTONE 2: SECURITY & CONFIGURATION (Week 1-2)
+================================================================================
+Priority: CRITICAL | Est: 4-5 days | Status: NOT STARTED
+
+[ ] 2.1 Remove hardcoded secrets
+    [ ] Remove Stripe publishable key from lib/main.dart
+    [ ] Remove any API keys from source code
+    [ ] Create .env.example file as template
+    [ ] Add .env to .gitignore
+
+[ ] 2.2 Implement environment configuration
+    [ ] Create lib/core/config/app_config.dart
+    [ ] Set up --dart-define for environment variables
+    [ ] Create build scripts for dev/staging/prod
+    [ ] Document environment variable usage
+
+[✅] 2.3 Secure storage implementation
+    [✅] Add flutter_secure_storage package
+    [✅] Create secure storage service
+    [✅] Store sensitive tokens securely
+    [✅] Implement key rotation mechanism
+
+[✅] 2.4 API security hardening
+    [✅] Verify all API calls use HTTPS (production)
+    [✅] Implement API key rotation strategy
+    [✅] Add request signing for critical endpoints
+    [✅] Implement rate limiting on client side
+
+[✅] 2.5 Remove debug-only code from production
+    [✅] Remove forced sign-out in lib/main.dart (line 118-124)
+    [✅] Wrap all debug code in kDebugMode checks
+    [✅] Remove DebugPreviewHome or gate behind flag
+    [✅] Clean up test/debug routes
+
+DELIVERABLE: Secure app with no exposed secrets ✅ COMPLETED
+
+================================================================================
+MILESTONE 3: STATE MANAGEMENT CONSOLIDATION (Week 2)
+================================================================================
+Priority: CRITICAL | Est: 5-6 days | Status: IN PROGRESS
+
+[✅] 3.1 Remove Provider package
+    [✅] Audit all files using provider package
+    [✅] Migrate to Riverpod equivalents
+    [✅] Remove provider from pubspec.yaml
+    [✅] Test all affected screens
+
+[✅] 3.2 Consolidate cart management
+    [✅] Review cart_provider.dart and cart_repository_provider.dart
+    [✅] Merge into single cart provider
+    [✅] Update all cart-related screens
+    [✅] Add cart persistence with local storage
+    [✅] Test cart operations (add, remove, update, clear)
+
+[✅] 3.3 Clean up print() statements
+    [✅] Replace all print() with AppLogger calls
+    [✅] Use appropriate log levels (debug, info, error)
+    [✅] Remove kDebugMode guards (AppLogger handles this)
+
+[✅] 3.4 Clean up app_state_provider
+    [✅] Remove redundant cart state (now in cart_provider)
+    [✅] Remove redundant user state (now in user_providers)
+    [✅] Update all widgets to use correct providers
+    [✅] Keep only unique state (wishlist, notifications, currency, news)
+
+DELIVERABLE: Clean, consistent Riverpod-only state management ✅ COMPLETED
+
+================================================================================
+MILESTONE 4: NAVIGATION & ROUTING OVERHAUL (Week 2-3)
+================================================================================
+Priority: HIGH | Est: 3-4 days | Status: IN PROGRESS
+
+[X] 4.1 Create centralized routing
+    [X] Create lib/core/routing/app_router.dart
+    [X] Define all route constants
+    [X] Implement onGenerateRoute
+    [X] Remove mixed navigation patterns
+
+[X] 4.2 Implement route guards
+    [X] Create authentication guard
+    [X] Create role-based guards (admin, vendor, affiliate)
+    [X] Implement redirect logic for unauthorized access
+    [X] Test guard behavior
+
+[X] 4.3 Fix deep linking
+    [X] Re-enable deep link handler in main.dart
+    [X] Test payment success deep links
+    [X] Test affiliate link deep links
+    [X] Document deep link patterns
+
+[X] 4.4 Navigation consistency
+    [X] Replace all Navigator.push with named routes
+    [X] Standardize navigation parameters
+    [X] Add navigation animations
+    [X] Test navigation flow
+
+[X] 4.5 Bottom navigation improvements
+    [X] Persist navigation state
+    [X] Implement tab restoration
+    [X] Add navigation analytics
+    [X] Test navigation edge cases
+
+DELIVERABLE: Type-safe, consistent navigation system
+
+================================================================================
+MILESTONE 5: API INTEGRATION & BACKEND CONNECTION (Week 3)
+================================================================================
+Priority: CRITICAL | Est: 5-7 days | Status: NOT STARTED
+
+[ ] 5.1 Complete API service migration
+    [ ] Replace all direct HTTP calls with ApiService
+    [ ] Remove localhost references from all files
+    [ ] Verify AWS ECS endpoint in all services
+    [ ] Test API connectivity
+
+[ ] 5.2 Update affiliate API
+    [ ] Complete migration to AWS backend in affiliate_api.dart
+    [ ] Remove Firebase emulator fallbacks
+    [ ] Test affiliate link generation
+    [ ] Test shipment request creation
+
+[ ] 5.3 Payment endpoint updates
+    [ ] Update Stripe endpoints in checkout_screen.dart
+    [ ] Update Paystack endpoints
+    [ ] Update Flutterwave endpoints
+    [ ] Point to AWS ECS backend for payment operations
+
+[ ] 5.4 Error handling implementation
+    [ ] Create lib/core/error/error_handler.dart
+    [ ] Implement global error handling
+    [ ] Add user-friendly error messages
+    [ ] Add retry logic for failed requests
+    [ ] Implement offline queue for critical operations
+
+[ ] 5.5 API response handling
+    [ ] Standardize response parsing
+    [ ] Add response validation
+    [ ] Implement response caching
+    [ ] Add request/response logging (debug only)
+
+[ ] 5.6 Test all API endpoints
+    [ ] Test authentication APIs
+    [ ] Test customer APIs
+    [ ] Test vendor APIs
+    [ ] Test affiliate APIs
+    [ ] Test product/cart/order APIs
+    [ ] Test payment APIs
+    [ ] Document any API issues
+
+DELIVERABLE: Fully integrated backend with robust error handling
+
+================================================================================
+MILESTONE 6: PAYMENT SYSTEM COMPLETION (Week 3-4)
+================================================================================
+Priority: CRITICAL | Est: 6-8 days | Status: NOT STARTED
+
+[ ] 6.1 Move payment keys to backend
+    [ ] Create backend endpoint to fetch Stripe publishable key
+    [ ] Create backend endpoint to fetch Paystack public key
+    [ ] Create backend endpoint to fetch Flutterwave public key
+    [ ] Update app to fetch keys on startup
+    [ ] Implement key caching with expiration
+
+[ ] 6.2 Complete Stripe integration
+    [ ] Implement server-side payment intent creation
+    [ ] Add payment verification endpoint
+    [ ] Test successful payment flow
+    [ ] Test failed payment handling
+    [ ] Test payment cancellation
+    [ ] Add Stripe webhook handlers (backend)
+
+[ ] 6.3 Complete Paystack integration
+    [ ] Verify Paystack initialization flow
+    [ ] Implement backend verification
+    [ ] Test payment flow end-to-end
+    [ ] Add webhook handlers (backend)
+    [ ] Test refund flow
+
+[ ] 6.4 Complete Flutterwave integration
+    [ ] Verify Flutterwave payment flow
+    [ ] Implement backend verification
+    [ ] Test payment flow end-to-end
+    [ ] Add webhook handlers (backend)
+    [ ] Test refund flow
+
+[ ] 6.5 Payment state management
+    [ ] Create payment provider
+    [ ] Implement payment state persistence
+    [ ] Add payment retry mechanism
+    [ ] Create payment history screen
+    [ ] Test payment state recovery
+
+[ ] 6.6 Payment security & compliance
+    [ ] Implement 3D Secure for cards
+    [ ] Add fraud detection checks
+    [ ] Implement PCI compliance measures
+    [ ] Add payment audit logging
+    [ ] Test security measures
+
+DELIVERABLE: Production-ready payment system with all gateways
+
+================================================================================
+MILESTONE 7: TESTING & QUALITY ASSURANCE (Week 4-5)
+================================================================================
+Priority: HIGH | Est: 7-10 days | Status: NOT STARTED
+
+[ ] 7.1 Unit testing
+    [ ] Write tests for all services (target 80%+ coverage)
+    [ ] Write tests for all providers
+    [ ] Write tests for all models
+    [ ] Write tests for utilities
+    [ ] Run coverage report
+
+[ ] 7.2 Widget testing
+    [ ] Test all custom widgets
+    [ ] Test form validation
+    [ ] Test navigation flows
+    [ ] Test state changes
+    [ ] Target 60%+ widget coverage
+
+[ ] 7.3 Integration testing
+    [ ] Update existing integration tests for new backend
+    [ ] Test complete customer journey
+    [ ] Test vendor registration and product management
+    [ ] Test affiliate workflow
+    [ ] Test payment flows
+    [ ] Test admin operations
+
+[ ] 7.4 Manual testing - CUSTOMER FLOW
+    [ ] Sign up / Login
+    [ ] Browse products
+    [ ] Search products
+    [ ] Filter by category
+    [ ] Add to cart
+    [ ] Update cart
+    [ ] Checkout flow
+    [ ] Payment (all gateways)
+    [ ] Order tracking
+    [ ] Review/rating products
+
+[ ] 7.5 Manual testing - VENDOR FLOW
+    [ ] Vendor registration
+    [ ] Login as vendor
+    [ ] Add products
+    [ ] Update products
+    [ ] View orders
+    [ ] Update order status
+    [ ] View analytics
+    [ ] Request payout
+
+[ ] 7.6 Manual testing - AFFILIATE FLOW
+    [ ] Affiliate registration
+    [ ] Login as affiliate
+    [ ] Generate shipping links
+    [ ] View referrals
+    [ ] View commissions
+    [ ] Request payout
+
+[ ] 7.7 Manual testing - ADMIN FLOW
+    [ ] Login as admin
+    [ ] View dashboard
+    [ ] Manage users
+    [ ] Manage vendors
+    [ ] Manage affiliates
+    [ ] Approve registrations
+    [ ] View reports
+
+[ ] 7.8 Performance testing
+    [ ] Profile app with DevTools
+    [ ] Identify and fix memory leaks
+    [ ] Optimize slow screens
+    [ ] Test on low-end devices
+    [ ] Measure app startup time
+    [ ] Optimize image loading
+    [ ] Reduce app size
+
+[ ] 7.9 Cross-platform testing
+    [ ] Test on Android (multiple versions)
+    [ ] Test on iOS (multiple versions)
+    [ ] Test on tablets
+    [ ] Test different screen sizes
+    [ ] Test landscape mode
+
+DELIVERABLE: Thoroughly tested app with documented test coverage
+
+================================================================================
+MILESTONE 8: PRODUCTION PREP & POLISH (Week 5-6)
+================================================================================
+Priority: HIGH | Est: 5-7 days | Status: NOT STARTED
+
+[ ] 8.1 UI/UX polish
+    [ ] Consistent spacing and padding
+    [ ] Consistent colors and typography
+    [ ] Smooth animations and transitions
+    [ ] Loading states for all async operations
+    [ ] Empty states for all lists
+    [ ] Error states with retry options
+    [ ] Accessibility improvements
+
+[ ] 8.2 Performance optimization
+    [ ] Implement image caching
+    [ ] Lazy load product lists
+    [ ] Implement pagination
+    [ ] Optimize large lists with ListView.builder
+    [ ] Reduce app bundle size
+    [ ] Enable code splitting
+
+[ ] 8.3 Monitoring & analytics
+    [ ] Verify Firebase Analytics integration
+    [ ] Add custom analytics events
+    [ ] Implement Firebase Crashlytics
+    [ ] Add performance monitoring
+    [ ] Test analytics in debug mode
+    [ ] Verify analytics in production
+
+[ ] 8.4 Internationalization (Optional but Recommended)
+    [ ] Add flutter_localizations package
+    [ ] Extract all hardcoded strings
+    [ ] Create localization files (en, es, fr)
+    [ ] Test language switching
+    [ ] Add RTL support
+
+[ ] 8.5 App metadata & assets
+    [ ] Create app icon (Android & iOS)
+    [ ] Create launch screens
+    [ ] Update app name and descriptions
+    [ ] Create store screenshots
+    [ ] Prepare promotional graphics
+    [ ] Write app store descriptions
+
+[ ] 8.6 Documentation
+    [ ] Update README.md
+    [ ] Create CHANGELOG.md
+    [ ] Document environment setup
+    [ ] Create deployment guide
+    [ ] Document API integration
+    [ ] Create troubleshooting guide
+
+[ ] 8.7 Build configuration
+    [ ] Configure release builds (Android)
+    [ ] Set up signing (Android)
+    [ ] Configure release builds (iOS)
+    [ ] Set up code signing (iOS)
+    [ ] Test release builds
+    [ ] Verify ProGuard rules (Android)
+
+[ ] 8.8 Pre-launch checklist
+    [ ] Test on real devices
+    [ ] Verify all features work
+    [ ] Check app permissions
+    [ ] Verify deep links
+    [ ] Test push notifications
+    [ ] Verify payment flows
+    [ ] Check compliance (GDPR, privacy policy)
+    [ ] Backup database
+    [ ] Prepare rollback plan
+
+DELIVERABLE: Production-ready app with all polish and documentation
+
+================================================================================
+                            COMPLETION CRITERIA
+================================================================================
+
+DEFINITION OF DONE (Each Milestone):
+[ ] All tasks completed and checked off
+[ ] Code reviewed
+[ ] Tests written and passing
+[ ] Documentation updated
+[ ] No critical bugs
+[ ] Stakeholder approval
+
+PRODUCTION LAUNCH CRITERIA:
+[ ] All 8 milestones completed
+[ ] App tested on real devices
+[ ] Zero critical bugs
+[ ] Performance metrics acceptable
+[ ] Store listings ready
+[ ] Marketing materials prepared
+[ ] Support system in place
+
+================================================================================
+                              SUCCESS METRICS
+================================================================================
+
+Code Quality:    0 analyzer warnings, 70%+ test coverage
+Performance:     < 3s startup time, 60fps scrolling
+Stability:       < 1% crash rate
+User Experience: < 2s screen load times
+Security:        No exposed secrets, all HTTPS
+
+================================================================================
+                              QUICK COMMANDS
+================================================================================
+
+Delete temp files:     .\scripts\cleanup-temp-files.ps1
+Run analyzer:          flutter analyze
+Run formatter:         flutter format .
+Run tests:             flutter test
+Build Android:         flutter build apk --release
+Build iOS:             flutter build ios --release
+Check coverage:        flutter test --coverage
+
+================================================================================
+                                 NOTES
+================================================================================
+
+Start Date:    Dec 22, 2025
+Target Launch: Feb 2026 (6 weeks)
+State Mgmt:    Riverpod (confirmed)
+
+Current Status:
+- Analysis complete
+- Roadmap created
+- Backend API deployed at AWS ECS
+- Ready to start Milestone 1
+
+================================================================================
+                           END OF MILESTONE LIST
+================================================================================

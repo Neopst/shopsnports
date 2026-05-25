@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "shopsnports"
+  },
+  "targets": {
+    "shopsnports": {
+      "hosting": {
+        "admin": [
+          "shopsnports"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

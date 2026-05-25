@@ -1,0 +1,116 @@
+banner_001: {
+  "id": "banner_001",
+  "title": "Fast & Reliable Shipping",
+  "subtitle": "Shipping your cargo with care",
+  "imageUrl": "https://via.placeholder.com/800x300?text=Fast+Shipping",
+  "position": "HOME_CAROUSEL",
+  "displayOrder": 1,
+  "isActive": true,
+  "startDate": {
+    "_seconds": 1770858644,
+    "_nanoseconds": 681000000
+  },
+  "endDate": {
+    "_seconds": 1802394644,
+    "_nanoseconds": 681000000
+  },
+  "impressions": 0,
+  "clicks": 0,
+  "createdAt": {
+    "_seconds": 1770858644,
+    "_nanoseconds": 681000000
+  },
+  "updatedAt": {
+    "_seconds": 1770858644,
+    "_nanoseconds": 681000000
+  },
+  "createdBy": "system",
+  "updatedBy": "system"
+}
+banner_002: {
+  "id": "banner_002",
+  "title": "Competitive Rates Guaranteed",
+  "subtitle": "Best prices in the market",
+  "imageUrl": "https://via.placeholder.com/800x300?text=Competitive+Rates",
+  "position": "HOME_CAROUSEL",
+  "displayOrder": 2,
+  "isActive": true,
+  "startDate": {
+    "_seconds": 1770858644,
+    "_nanoseconds": 681000000
+  },
+  "endDate": {
+    "_seconds": 1802394644,
+    "_nanoseconds": 681000000
+  },
+  "impressions": 0,
+  "clicks": 0,
+  "createdAt": {
+    "_seconds": 1770858644,
+    "_nanoseconds": 681000000
+  },
+  "updatedAt": {
+    "_seconds": 1770858644,
+    "_nanoseconds": 681000000
+  },
+  "createdBy": "system",
+  "updatedBy": "system"
+}
+banner_003: {
+  "id": "banner_003",
+  "title": "Real-Time Tracking",
+  "subtitle": "Know where your cargo is at all times",
+  "imageUrl": "https://via.placeholder.com/800x300?text=Real-Time+Tracking",
+  "position": "HOME_CAROUSEL",
+  "displayOrder": 3,
+  "isActive": true,
+  "startDate": {
+    "_seconds": 1770858644,
+    "_nanoseconds": 681000000
+  },
+  "endDate": {
+    "_seconds": 1802394644,
+    "_nanoseconds": 681000000
+  },
+  "impressions": 0,
+  "clicks": 0,
+  "createdAt": {
+    "_seconds": 1770858644,
+    "_nanoseconds": 681000000
+  },
+  "updatedAt": {
+    "_seconds": 1770858644,
+    "_nanoseconds": 681000000
+  },
+  "createdBy": "system",
+  "updatedBy": "system"
+}
+banner_004: {
+  "id": "banner_004",
+  "title": "Become an Affiliate Agent",
+  "subtitle": "Earn commissions with our referral program",
+  "imageUrl": "https://via.placeholder.com/800x300?text=Affiliate+Program",
+  "position": "HOME_CAROUSEL",
+  "displayOrder": 4,
+  "isActive": true,
+  "startDate": {
+    "_seconds": 1770858644,
+    "_nanoseconds": 681000000
+  },
+  "endDate": {
+    "_seconds": 1802394644,
+    "_nanoseconds": 681000000
+  },
+  "impressions": 0,
+  "clicks": 0,
+  "createdAt": {
+    "_seconds": 1770858644,
+    "_nanoseconds": 681000000
+  },
+  "updatedAt": {
+    "_seconds": 1770858644,
+    "_nanoseconds": 681000000
+  },
+  "createdBy": "system",
+  "updatedBy": "system"
+}

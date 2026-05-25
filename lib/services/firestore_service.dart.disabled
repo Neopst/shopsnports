@@ -1,0 +1,120 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../models/product.dart';
+
+class FirestoreService {
+  final FirebaseFirestore _db;
+
+  /// [db] is required to enforce provider-based Firestore usage.
+  /// Use `ref.read(firestoreProvider)` in production and a FakeFirebaseFirestore
+  /// in tests.
+  FirestoreService(this._db);
+
+  Future<List<String>> getNewsTitles({int limit = 5}) async {
+    final snap = await _db
+        .collection('news')
+        .orderBy('createdAt', descending: true)
+        .limit(limit)
+        .get();
+    return snap.docs.map((d) => (d.data()['title'] ?? '') as String).toList();
+  }
+
+  Future<List<Product>> getProductsByCategory(String category,
+      {int limit = 10}) async {
+    final snap = await _db
+        .collection('products')
+        .where('category', isEqualTo: category)
+        .orderBy('createdAt', descending: true)
+        .limit(limit)
+        .get();
+    return snap.docs
+        .map(
+            (d) => Product.fromJson(Map<String, dynamic>.from(d.data() as Map)))
+        .toList();
+  }
+
+  /// Generalized product query with server-side filters, pagination and simple sorting.
+  ///
+  /// Supported filters: category (required), minPrice, maxPrice, vendor, minRating, searchQuery.
+  /// For pagination provide [startAfter] which should be a DocumentSnapshot to use as cursor.
+  /// Returns a map with keys:
+  /// - 'items': List\<Product\>
+  /// - 'lastDoc': DocumentSnapshot? (for pagination)
+  Future<Map<String, dynamic>> getProducts({
+    required String category,
+    double? minPrice,
+    double? maxPrice,
+    String? vendor,
+    double? minRating,
+    String? searchQuery,
+    DocumentSnapshot? startAfter,
+    int limit = 24,
+    String sort =
+        'createdAt_desc', // options: createdAt_desc, price_asc, price_desc
+  }) async {
+    Query q = _db.collection('products').where('category', isEqualTo: category);
+
+    if (vendor != null && vendor.isNotEmpty) {
+      q = q.where('vendor', isEqualTo: vendor);
+    }
+
+    if (minPrice != null) {
+      q = q.where('price', isGreaterThanOrEqualTo: minPrice);
+    }
+    if (maxPrice != null) {
+      q = q.where('price', isLessThanOrEqualTo: maxPrice);
+    }
+
+    // Note: rating indexing depends on your data model; include if present
+    if (minRating != null && minRating > 0) {
+      q = q.where('rating', isGreaterThanOrEqualTo: minRating);
+    }
+
+    // sorting
+    switch (sort) {
+      case 'price_asc':
+        q = q.orderBy('price', descending: false);
+        break;
+      case 'price_desc':
+        q = q.orderBy('price', descending: true);
+        break;
+      default:
+        q = q.orderBy('createdAt', descending: true);
+    }
+
+    if (startAfter != null) q = q.startAfterDocument(startAfter);
+
+    final snap = await q.limit(limit).get();
+    List<Product> items = [];
+    try {
+      items = snap.docs
+          .map((d) =>
+              Product.fromJson(Map<String, dynamic>.from(d.data() as Map)))
+          .toList();
+    } on FirebaseException catch (_) {
+      // If the query fails because an index is required, return empty results
+      // so the UI can show a friendly message instead of crashing.
+      // Firestore console provides a URL in the exception message for creating
+      // the required composite index.
+      // Example: fe.message contains the create index URL.
+      return {'items': <Product>[], 'lastDoc': null};
+    }
+
+    if (searchQuery != null && searchQuery.trim().isNotEmpty) {
+      final ql = searchQuery.toLowerCase().trim();
+      final filtered = items
+          .where((p) => ('${p.name} ${p.description ?? ''} ${p.vendor ?? ''}')
+              .toLowerCase()
+              .contains(ql))
+          .toList();
+      return {
+        'items': filtered,
+        'lastDoc': snap.docs.isNotEmpty ? snap.docs.last : null
+      };
+    }
+
+    return {
+      'items': items,
+      'lastDoc': snap.docs.isNotEmpty ? snap.docs.last : null
+    };
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "shopsnports-smoke-tests",
+  "version": "1.0.0",
+  "description": "Smoke tests for Firestore rules using Admin SDK + REST client",
+  "main": "smoke_test_full.js",
+  "scripts": {
+    "smoke": "node smoke_test_full.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^11.10.0",
+    "node-fetch": "^2.6.9"
+  }
+}

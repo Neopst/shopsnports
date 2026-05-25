@@ -1,0 +1,6 @@
+FROM postgres:15
+# Copy the entrypoint script from its path relative to the project root when building
+COPY server/docker/postgres-entrypoint.sh /docker-entrypoint-postgres.sh
+RUN chmod +x /docker-entrypoint-postgres.sh
+ENTRYPOINT ["/docker-entrypoint-postgres.sh"]
+# Rebuild note: this image reads POSTGRES_PASSWORD from the secret shopsnports_postgres_superuser_password

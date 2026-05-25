@@ -1,0 +1,313 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "commissions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "shippingRequestId",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "affiliateId",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "recovery_requests",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "adminId",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "recovery_requests",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "recoveryCode",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "email_templates",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "type",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "isActive",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "fcm_tokens",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "userId",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "isActive",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "invoices",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "shippingRequestId",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "affiliateId",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "security_alerts",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "email",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "timestamp",
+          "order": "DESC",
+          "mode": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "security_alerts",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "adminId",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "action",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "timestamp",
+          "order": "DESC",
+          "mode": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "admin_users",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "role",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "isActive",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "form_shares",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "used",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "expiresAt",
+          "order": "ASC",
+          "mode": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "email_queue",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "sent",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "failed",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "retries",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "activity_log",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "adminId",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "timestamp",
+          "order": "DESC",
+          "mode": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "notifications",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "targetUserId",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "read",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
+          "order": "DESC",
+          "mode": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "shippingRequests",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "affiliate",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
+          "order": "DESC",
+          "mode": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "shippingRequests",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "status",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
+          "order": "DESC",
+          "mode": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "payouts",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "affiliateId",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
+          "order": "DESC",
+          "mode": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "affiliate_tokens",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "affiliateId",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "used",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "push_notification_stats",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "createdBy",
+          "order": "ASC",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
+          "order": "DESC",
+          "mode": "DESCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

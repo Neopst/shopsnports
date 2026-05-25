@@ -1,0 +1,1197 @@
+[
+  {
+    "id": "seed_inv_1",
+    "invoiceNumber": "INV-1000",
+    "date": "2025-12-15T16:32:50.302Z",
+    "dueDate": "2026-01-14T16:32:50.302Z",
+    "customerId": "cust_1",
+    "customerName": "Alpha LLC",
+    "status": "draft",
+    "lines": [
+      {
+        "description": "Item 1-1",
+        "quantity": 2,
+        "unitPrice": 44.69
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_2",
+    "invoiceNumber": "INV-1001",
+    "date": "2025-12-14T16:32:50.303Z",
+    "dueDate": "2026-01-13T16:32:50.303Z",
+    "customerId": "cust_2",
+    "customerName": "Beta Co",
+    "status": "sent",
+    "lines": [
+      {
+        "description": "Item 2-1",
+        "quantity": 2,
+        "unitPrice": 44.95
+      },
+      {
+        "description": "Item 2-2",
+        "quantity": 3,
+        "unitPrice": 39.36
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_3",
+    "invoiceNumber": "INV-1002",
+    "date": "2025-12-13T16:32:50.303Z",
+    "dueDate": "2026-01-12T16:32:50.303Z",
+    "customerId": "cust_3",
+    "customerName": "Gamma Inc",
+    "status": "paid",
+    "lines": [
+      {
+        "description": "Item 3-1",
+        "quantity": 2,
+        "unitPrice": 42.04
+      },
+      {
+        "description": "Item 3-2",
+        "quantity": 3,
+        "unitPrice": 67.4
+      },
+      {
+        "description": "Item 3-3",
+        "quantity": 1,
+        "unitPrice": 39.97
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_4",
+    "invoiceNumber": "INV-1003",
+    "date": "2025-12-12T16:32:50.303Z",
+    "dueDate": "2026-01-11T16:32:50.303Z",
+    "customerId": "cust_4",
+    "customerName": "Delta Ltd",
+    "status": "cancelled",
+    "lines": [
+      {
+        "description": "Item 4-1",
+        "quantity": 2,
+        "unitPrice": 28.46
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_5",
+    "invoiceNumber": "INV-1004",
+    "date": "2025-12-11T16:32:50.303Z",
+    "dueDate": "2026-01-10T16:32:50.303Z",
+    "customerId": "cust_1",
+    "customerName": "Alpha LLC",
+    "status": "draft",
+    "lines": [
+      {
+        "description": "Item 5-1",
+        "quantity": 2,
+        "unitPrice": 66.29
+      },
+      {
+        "description": "Item 5-2",
+        "quantity": 3,
+        "unitPrice": 75.4
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_6",
+    "invoiceNumber": "INV-1005",
+    "date": "2025-12-10T16:32:50.303Z",
+    "dueDate": "2026-01-09T16:32:50.303Z",
+    "customerId": "cust_2",
+    "customerName": "Beta Co",
+    "status": "sent",
+    "lines": [
+      {
+        "description": "Item 6-1",
+        "quantity": 2,
+        "unitPrice": 98.03
+      },
+      {
+        "description": "Item 6-2",
+        "quantity": 3,
+        "unitPrice": 80.81
+      },
+      {
+        "description": "Item 6-3",
+        "quantity": 1,
+        "unitPrice": 19.29
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_7",
+    "invoiceNumber": "INV-1006",
+    "date": "2025-12-09T16:32:50.303Z",
+    "dueDate": "2026-01-08T16:32:50.303Z",
+    "customerId": "cust_3",
+    "customerName": "Gamma Inc",
+    "status": "paid",
+    "lines": [
+      {
+        "description": "Item 7-1",
+        "quantity": 2,
+        "unitPrice": 35.46
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_8",
+    "invoiceNumber": "INV-1007",
+    "date": "2025-12-08T16:32:50.303Z",
+    "dueDate": "2026-01-07T16:32:50.303Z",
+    "customerId": "cust_4",
+    "customerName": "Delta Ltd",
+    "status": "cancelled",
+    "lines": [
+      {
+        "description": "Item 8-1",
+        "quantity": 2,
+        "unitPrice": 93.32
+      },
+      {
+        "description": "Item 8-2",
+        "quantity": 3,
+        "unitPrice": 99.92
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_9",
+    "invoiceNumber": "INV-1008",
+    "date": "2025-12-07T16:32:50.303Z",
+    "dueDate": "2026-01-06T16:32:50.303Z",
+    "customerId": "cust_1",
+    "customerName": "Alpha LLC",
+    "status": "draft",
+    "lines": [
+      {
+        "description": "Item 9-1",
+        "quantity": 2,
+        "unitPrice": 93.43
+      },
+      {
+        "description": "Item 9-2",
+        "quantity": 3,
+        "unitPrice": 46.57
+      },
+      {
+        "description": "Item 9-3",
+        "quantity": 1,
+        "unitPrice": 19.79
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_10",
+    "invoiceNumber": "INV-1009",
+    "date": "2025-12-06T16:32:50.303Z",
+    "dueDate": "2026-01-05T16:32:50.303Z",
+    "customerId": "cust_2",
+    "customerName": "Beta Co",
+    "status": "sent",
+    "lines": [
+      {
+        "description": "Item 10-1",
+        "quantity": 2,
+        "unitPrice": 68.44
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_11",
+    "invoiceNumber": "INV-1010",
+    "date": "2025-12-05T16:32:50.303Z",
+    "dueDate": "2026-01-04T16:32:50.303Z",
+    "customerId": "cust_3",
+    "customerName": "Gamma Inc",
+    "status": "paid",
+    "lines": [
+      {
+        "description": "Item 11-1",
+        "quantity": 2,
+        "unitPrice": 17.69
+      },
+      {
+        "description": "Item 11-2",
+        "quantity": 3,
+        "unitPrice": 20.25
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_12",
+    "invoiceNumber": "INV-1011",
+    "date": "2025-12-04T16:32:50.304Z",
+    "dueDate": "2026-01-03T16:32:50.304Z",
+    "customerId": "cust_4",
+    "customerName": "Delta Ltd",
+    "status": "cancelled",
+    "lines": [
+      {
+        "description": "Item 12-1",
+        "quantity": 2,
+        "unitPrice": 64.03
+      },
+      {
+        "description": "Item 12-2",
+        "quantity": 3,
+        "unitPrice": 40.87
+      },
+      {
+        "description": "Item 12-3",
+        "quantity": 1,
+        "unitPrice": 79.1
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_13",
+    "invoiceNumber": "INV-1012",
+    "date": "2025-12-03T16:32:50.304Z",
+    "dueDate": "2026-01-02T16:32:50.304Z",
+    "customerId": "cust_1",
+    "customerName": "Alpha LLC",
+    "status": "draft",
+    "lines": [
+      {
+        "description": "Item 13-1",
+        "quantity": 2,
+        "unitPrice": 82.2
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_14",
+    "invoiceNumber": "INV-1013",
+    "date": "2025-12-02T16:32:50.304Z",
+    "dueDate": "2026-01-01T16:32:50.304Z",
+    "customerId": "cust_2",
+    "customerName": "Beta Co",
+    "status": "sent",
+    "lines": [
+      {
+        "description": "Item 14-1",
+        "quantity": 2,
+        "unitPrice": 12.52
+      },
+      {
+        "description": "Item 14-2",
+        "quantity": 3,
+        "unitPrice": 71.97
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_15",
+    "invoiceNumber": "INV-1014",
+    "date": "2025-12-01T16:32:50.304Z",
+    "dueDate": "2025-12-31T16:32:50.304Z",
+    "customerId": "cust_3",
+    "customerName": "Gamma Inc",
+    "status": "paid",
+    "lines": [
+      {
+        "description": "Item 15-1",
+        "quantity": 2,
+        "unitPrice": 99.38
+      },
+      {
+        "description": "Item 15-2",
+        "quantity": 3,
+        "unitPrice": 56.84
+      },
+      {
+        "description": "Item 15-3",
+        "quantity": 1,
+        "unitPrice": 47.39
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_16",
+    "invoiceNumber": "INV-1015",
+    "date": "2025-11-30T16:32:50.304Z",
+    "dueDate": "2025-12-30T16:32:50.304Z",
+    "customerId": "cust_4",
+    "customerName": "Delta Ltd",
+    "status": "cancelled",
+    "lines": [
+      {
+        "description": "Item 16-1",
+        "quantity": 2,
+        "unitPrice": 13.69
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_17",
+    "invoiceNumber": "INV-1016",
+    "date": "2025-11-29T16:32:50.304Z",
+    "dueDate": "2025-12-29T16:32:50.304Z",
+    "customerId": "cust_1",
+    "customerName": "Alpha LLC",
+    "status": "draft",
+    "lines": [
+      {
+        "description": "Item 17-1",
+        "quantity": 2,
+        "unitPrice": 32.08
+      },
+      {
+        "description": "Item 17-2",
+        "quantity": 3,
+        "unitPrice": 35.48
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_18",
+    "invoiceNumber": "INV-1017",
+    "date": "2025-11-28T16:32:50.304Z",
+    "dueDate": "2025-12-28T16:32:50.304Z",
+    "customerId": "cust_2",
+    "customerName": "Beta Co",
+    "status": "sent",
+    "lines": [
+      {
+        "description": "Item 18-1",
+        "quantity": 2,
+        "unitPrice": 17.82
+      },
+      {
+        "description": "Item 18-2",
+        "quantity": 3,
+        "unitPrice": 76.96
+      },
+      {
+        "description": "Item 18-3",
+        "quantity": 1,
+        "unitPrice": 33.05
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_19",
+    "invoiceNumber": "INV-1018",
+    "date": "2025-11-27T16:32:50.304Z",
+    "dueDate": "2025-12-27T16:32:50.304Z",
+    "customerId": "cust_3",
+    "customerName": "Gamma Inc",
+    "status": "paid",
+    "lines": [
+      {
+        "description": "Item 19-1",
+        "quantity": 2,
+        "unitPrice": 88.98
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_20",
+    "invoiceNumber": "INV-1019",
+    "date": "2025-11-26T16:32:50.304Z",
+    "dueDate": "2025-12-26T16:32:50.304Z",
+    "customerId": "cust_4",
+    "customerName": "Delta Ltd",
+    "status": "cancelled",
+    "lines": [
+      {
+        "description": "Item 20-1",
+        "quantity": 2,
+        "unitPrice": 50.93
+      },
+      {
+        "description": "Item 20-2",
+        "quantity": 3,
+        "unitPrice": 19.59
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_21",
+    "invoiceNumber": "INV-1020",
+    "date": "2025-11-25T16:32:50.304Z",
+    "dueDate": "2025-12-25T16:32:50.304Z",
+    "customerId": "cust_1",
+    "customerName": "Alpha LLC",
+    "status": "draft",
+    "lines": [
+      {
+        "description": "Item 21-1",
+        "quantity": 2,
+        "unitPrice": 78.21
+      },
+      {
+        "description": "Item 21-2",
+        "quantity": 3,
+        "unitPrice": 75.4
+      },
+      {
+        "description": "Item 21-3",
+        "quantity": 1,
+        "unitPrice": 19.69
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_22",
+    "invoiceNumber": "INV-1021",
+    "date": "2025-11-24T16:32:50.304Z",
+    "dueDate": "2025-12-24T16:32:50.304Z",
+    "customerId": "cust_2",
+    "customerName": "Beta Co",
+    "status": "sent",
+    "lines": [
+      {
+        "description": "Item 22-1",
+        "quantity": 2,
+        "unitPrice": 68.09
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_23",
+    "invoiceNumber": "INV-1022",
+    "date": "2025-11-23T16:32:50.304Z",
+    "dueDate": "2025-12-23T16:32:50.304Z",
+    "customerId": "cust_3",
+    "customerName": "Gamma Inc",
+    "status": "paid",
+    "lines": [
+      {
+        "description": "Item 23-1",
+        "quantity": 2,
+        "unitPrice": 66.64
+      },
+      {
+        "description": "Item 23-2",
+        "quantity": 3,
+        "unitPrice": 70.05
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_24",
+    "invoiceNumber": "INV-1023",
+    "date": "2025-11-22T16:32:50.304Z",
+    "dueDate": "2025-12-22T16:32:50.304Z",
+    "customerId": "cust_4",
+    "customerName": "Delta Ltd",
+    "status": "cancelled",
+    "lines": [
+      {
+        "description": "Item 24-1",
+        "quantity": 2,
+        "unitPrice": 65.46
+      },
+      {
+        "description": "Item 24-2",
+        "quantity": 3,
+        "unitPrice": 36.27
+      },
+      {
+        "description": "Item 24-3",
+        "quantity": 1,
+        "unitPrice": 12.28
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_25",
+    "invoiceNumber": "INV-1024",
+    "date": "2025-11-21T16:32:50.304Z",
+    "dueDate": "2025-12-21T16:32:50.304Z",
+    "customerId": "cust_1",
+    "customerName": "Alpha LLC",
+    "status": "draft",
+    "lines": [
+      {
+        "description": "Item 25-1",
+        "quantity": 2,
+        "unitPrice": 56
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_26",
+    "invoiceNumber": "INV-1025",
+    "date": "2025-11-20T16:32:50.304Z",
+    "dueDate": "2025-12-20T16:32:50.304Z",
+    "customerId": "cust_2",
+    "customerName": "Beta Co",
+    "status": "sent",
+    "lines": [
+      {
+        "description": "Item 26-1",
+        "quantity": 2,
+        "unitPrice": 91.65
+      },
+      {
+        "description": "Item 26-2",
+        "quantity": 3,
+        "unitPrice": 52.2
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_27",
+    "invoiceNumber": "INV-1026",
+    "date": "2025-11-19T16:32:50.304Z",
+    "dueDate": "2025-12-19T16:32:50.304Z",
+    "customerId": "cust_3",
+    "customerName": "Gamma Inc",
+    "status": "paid",
+    "lines": [
+      {
+        "description": "Item 27-1",
+        "quantity": 2,
+        "unitPrice": 89.9
+      },
+      {
+        "description": "Item 27-2",
+        "quantity": 3,
+        "unitPrice": 36.19
+      },
+      {
+        "description": "Item 27-3",
+        "quantity": 1,
+        "unitPrice": 75.87
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_28",
+    "invoiceNumber": "INV-1027",
+    "date": "2025-11-18T16:32:50.304Z",
+    "dueDate": "2025-12-18T16:32:50.304Z",
+    "customerId": "cust_4",
+    "customerName": "Delta Ltd",
+    "status": "cancelled",
+    "lines": [
+      {
+        "description": "Item 28-1",
+        "quantity": 2,
+        "unitPrice": 43.79
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_29",
+    "invoiceNumber": "INV-1028",
+    "date": "2025-11-17T16:32:50.304Z",
+    "dueDate": "2025-12-17T16:32:50.304Z",
+    "customerId": "cust_1",
+    "customerName": "Alpha LLC",
+    "status": "draft",
+    "lines": [
+      {
+        "description": "Item 29-1",
+        "quantity": 2,
+        "unitPrice": 22.77
+      },
+      {
+        "description": "Item 29-2",
+        "quantity": 3,
+        "unitPrice": 98.25
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_30",
+    "invoiceNumber": "INV-1029",
+    "date": "2025-11-16T16:32:50.304Z",
+    "dueDate": "2025-12-16T16:32:50.304Z",
+    "customerId": "cust_2",
+    "customerName": "Beta Co",
+    "status": "sent",
+    "lines": [
+      {
+        "description": "Item 30-1",
+        "quantity": 2,
+        "unitPrice": 37.59
+      },
+      {
+        "description": "Item 30-2",
+        "quantity": 3,
+        "unitPrice": 32.4
+      },
+      {
+        "description": "Item 30-3",
+        "quantity": 1,
+        "unitPrice": 41.62
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_31",
+    "invoiceNumber": "INV-1030",
+    "date": "2025-11-15T16:32:50.304Z",
+    "dueDate": "2025-12-15T16:32:50.304Z",
+    "customerId": "cust_3",
+    "customerName": "Gamma Inc",
+    "status": "paid",
+    "lines": [
+      {
+        "description": "Item 31-1",
+        "quantity": 2,
+        "unitPrice": 28.52
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_32",
+    "invoiceNumber": "INV-1031",
+    "date": "2025-11-14T16:32:50.304Z",
+    "dueDate": "2025-12-14T16:32:50.304Z",
+    "customerId": "cust_4",
+    "customerName": "Delta Ltd",
+    "status": "cancelled",
+    "lines": [
+      {
+        "description": "Item 32-1",
+        "quantity": 2,
+        "unitPrice": 88.37
+      },
+      {
+        "description": "Item 32-2",
+        "quantity": 3,
+        "unitPrice": 42.45
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_33",
+    "invoiceNumber": "INV-1032",
+    "date": "2025-11-13T16:32:50.304Z",
+    "dueDate": "2025-12-13T16:32:50.304Z",
+    "customerId": "cust_1",
+    "customerName": "Alpha LLC",
+    "status": "draft",
+    "lines": [
+      {
+        "description": "Item 33-1",
+        "quantity": 2,
+        "unitPrice": 71.47
+      },
+      {
+        "description": "Item 33-2",
+        "quantity": 3,
+        "unitPrice": 61.44
+      },
+      {
+        "description": "Item 33-3",
+        "quantity": 1,
+        "unitPrice": 87.94
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_34",
+    "invoiceNumber": "INV-1033",
+    "date": "2025-11-12T16:32:50.304Z",
+    "dueDate": "2025-12-12T16:32:50.304Z",
+    "customerId": "cust_2",
+    "customerName": "Beta Co",
+    "status": "sent",
+    "lines": [
+      {
+        "description": "Item 34-1",
+        "quantity": 2,
+        "unitPrice": 36.97
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_35",
+    "invoiceNumber": "INV-1034",
+    "date": "2025-11-11T16:32:50.304Z",
+    "dueDate": "2025-12-11T16:32:50.304Z",
+    "customerId": "cust_3",
+    "customerName": "Gamma Inc",
+    "status": "paid",
+    "lines": [
+      {
+        "description": "Item 35-1",
+        "quantity": 2,
+        "unitPrice": 16.62
+      },
+      {
+        "description": "Item 35-2",
+        "quantity": 3,
+        "unitPrice": 60.83
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_36",
+    "invoiceNumber": "INV-1035",
+    "date": "2025-11-10T16:32:50.304Z",
+    "dueDate": "2025-12-10T16:32:50.304Z",
+    "customerId": "cust_4",
+    "customerName": "Delta Ltd",
+    "status": "cancelled",
+    "lines": [
+      {
+        "description": "Item 36-1",
+        "quantity": 2,
+        "unitPrice": 80.93
+      },
+      {
+        "description": "Item 36-2",
+        "quantity": 3,
+        "unitPrice": 97.22
+      },
+      {
+        "description": "Item 36-3",
+        "quantity": 1,
+        "unitPrice": 95.05
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_37",
+    "invoiceNumber": "INV-1036",
+    "date": "2025-11-09T16:32:50.304Z",
+    "dueDate": "2025-12-09T16:32:50.304Z",
+    "customerId": "cust_1",
+    "customerName": "Alpha LLC",
+    "status": "draft",
+    "lines": [
+      {
+        "description": "Item 37-1",
+        "quantity": 2,
+        "unitPrice": 76.26
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_38",
+    "invoiceNumber": "INV-1037",
+    "date": "2025-11-08T16:32:50.304Z",
+    "dueDate": "2025-12-08T16:32:50.304Z",
+    "customerId": "cust_2",
+    "customerName": "Beta Co",
+    "status": "sent",
+    "lines": [
+      {
+        "description": "Item 38-1",
+        "quantity": 2,
+        "unitPrice": 40.61
+      },
+      {
+        "description": "Item 38-2",
+        "quantity": 3,
+        "unitPrice": 15.62
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_39",
+    "invoiceNumber": "INV-1038",
+    "date": "2025-11-07T16:32:50.304Z",
+    "dueDate": "2025-12-07T16:32:50.304Z",
+    "customerId": "cust_3",
+    "customerName": "Gamma Inc",
+    "status": "paid",
+    "lines": [
+      {
+        "description": "Item 39-1",
+        "quantity": 2,
+        "unitPrice": 19.25
+      },
+      {
+        "description": "Item 39-2",
+        "quantity": 3,
+        "unitPrice": 16.98
+      },
+      {
+        "description": "Item 39-3",
+        "quantity": 1,
+        "unitPrice": 86.23
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_40",
+    "invoiceNumber": "INV-1039",
+    "date": "2025-11-06T16:32:50.304Z",
+    "dueDate": "2025-12-06T16:32:50.304Z",
+    "customerId": "cust_4",
+    "customerName": "Delta Ltd",
+    "status": "cancelled",
+    "lines": [
+      {
+        "description": "Item 40-1",
+        "quantity": 2,
+        "unitPrice": 92.07
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_41",
+    "invoiceNumber": "INV-1040",
+    "date": "2025-11-05T16:32:50.304Z",
+    "dueDate": "2025-12-05T16:32:50.304Z",
+    "customerId": "cust_1",
+    "customerName": "Alpha LLC",
+    "status": "draft",
+    "lines": [
+      {
+        "description": "Item 41-1",
+        "quantity": 2,
+        "unitPrice": 33.66
+      },
+      {
+        "description": "Item 41-2",
+        "quantity": 3,
+        "unitPrice": 63.5
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_42",
+    "invoiceNumber": "INV-1041",
+    "date": "2025-11-04T16:32:50.304Z",
+    "dueDate": "2025-12-04T16:32:50.304Z",
+    "customerId": "cust_2",
+    "customerName": "Beta Co",
+    "status": "sent",
+    "lines": [
+      {
+        "description": "Item 42-1",
+        "quantity": 2,
+        "unitPrice": 80.93
+      },
+      {
+        "description": "Item 42-2",
+        "quantity": 3,
+        "unitPrice": 32.8
+      },
+      {
+        "description": "Item 42-3",
+        "quantity": 1,
+        "unitPrice": 51.49
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_43",
+    "invoiceNumber": "INV-1042",
+    "date": "2025-11-03T16:32:50.304Z",
+    "dueDate": "2025-12-03T16:32:50.304Z",
+    "customerId": "cust_3",
+    "customerName": "Gamma Inc",
+    "status": "paid",
+    "lines": [
+      {
+        "description": "Item 43-1",
+        "quantity": 2,
+        "unitPrice": 15.05
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_44",
+    "invoiceNumber": "INV-1043",
+    "date": "2025-11-02T16:32:50.304Z",
+    "dueDate": "2025-12-02T16:32:50.304Z",
+    "customerId": "cust_4",
+    "customerName": "Delta Ltd",
+    "status": "cancelled",
+    "lines": [
+      {
+        "description": "Item 44-1",
+        "quantity": 2,
+        "unitPrice": 99.21
+      },
+      {
+        "description": "Item 44-2",
+        "quantity": 3,
+        "unitPrice": 61.4
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_45",
+    "invoiceNumber": "INV-1044",
+    "date": "2025-11-01T16:32:50.304Z",
+    "dueDate": "2025-12-01T16:32:50.304Z",
+    "customerId": "cust_1",
+    "customerName": "Alpha LLC",
+    "status": "draft",
+    "lines": [
+      {
+        "description": "Item 45-1",
+        "quantity": 2,
+        "unitPrice": 43.84
+      },
+      {
+        "description": "Item 45-2",
+        "quantity": 3,
+        "unitPrice": 75.08
+      },
+      {
+        "description": "Item 45-3",
+        "quantity": 1,
+        "unitPrice": 85.46
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_46",
+    "invoiceNumber": "INV-1045",
+    "date": "2025-10-31T16:32:50.304Z",
+    "dueDate": "2025-11-30T16:32:50.304Z",
+    "customerId": "cust_2",
+    "customerName": "Beta Co",
+    "status": "sent",
+    "lines": [
+      {
+        "description": "Item 46-1",
+        "quantity": 2,
+        "unitPrice": 17.97
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_47",
+    "invoiceNumber": "INV-1046",
+    "date": "2025-10-30T16:32:50.304Z",
+    "dueDate": "2025-11-29T16:32:50.304Z",
+    "customerId": "cust_3",
+    "customerName": "Gamma Inc",
+    "status": "paid",
+    "lines": [
+      {
+        "description": "Item 47-1",
+        "quantity": 2,
+        "unitPrice": 96.5
+      },
+      {
+        "description": "Item 47-2",
+        "quantity": 3,
+        "unitPrice": 17.35
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_48",
+    "invoiceNumber": "INV-1047",
+    "date": "2025-10-29T16:32:50.304Z",
+    "dueDate": "2025-11-28T16:32:50.304Z",
+    "customerId": "cust_4",
+    "customerName": "Delta Ltd",
+    "status": "cancelled",
+    "lines": [
+      {
+        "description": "Item 48-1",
+        "quantity": 2,
+        "unitPrice": 36.06
+      },
+      {
+        "description": "Item 48-2",
+        "quantity": 3,
+        "unitPrice": 67.28
+      },
+      {
+        "description": "Item 48-3",
+        "quantity": 1,
+        "unitPrice": 13.52
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_49",
+    "invoiceNumber": "INV-1048",
+    "date": "2025-10-28T16:32:50.304Z",
+    "dueDate": "2025-11-27T16:32:50.304Z",
+    "customerId": "cust_1",
+    "customerName": "Alpha LLC",
+    "status": "draft",
+    "lines": [
+      {
+        "description": "Item 49-1",
+        "quantity": 2,
+        "unitPrice": 37.93
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  },
+  {
+    "id": "seed_inv_50",
+    "invoiceNumber": "INV-1049",
+    "date": "2025-10-27T16:32:50.304Z",
+    "dueDate": "2025-11-26T16:32:50.304Z",
+    "customerId": "cust_2",
+    "customerName": "Beta Co",
+    "status": "sent",
+    "lines": [
+      {
+        "description": "Item 50-1",
+        "quantity": 2,
+        "unitPrice": 78.98
+      },
+      {
+        "description": "Item 50-2",
+        "quantity": 3,
+        "unitPrice": 36.73
+      }
+    ],
+    "taxRate": 0.15,
+    "seeded": true,
+    "seedTag": "dev_invoices_v1"
+  }
+]

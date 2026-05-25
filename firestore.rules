@@ -1,0 +1,234 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ==================== HELPER FUNCTIONS ====================
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+             (request.auth.token.admin == true ||
+              request.auth.token.role in ['admin', 'super_admin', 'subAdmin']);
+    }
+
+    function isRequester(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAffiliate(affiliateId) {
+      return isAuthenticated() && request.auth.uid == affiliateId;
+    }
+
+    // ==================== CUSTOMERS COLLECTION ====================
+    match /customers/{customerId} {
+      // Customers can read their own profile
+      allow read: if request.auth.uid == customerId;
+      // Admins can read all customer profiles
+      allow read: if isAdmin();
+      // Customers create themselves with their UID
+      allow create: if request.auth.uid == customerId &&
+                      request.resource.data.email == request.auth.token.email;
+      // Customers or admins can update
+      allow update: if request.auth.uid == customerId || isAdmin();
+    }
+
+    // ==================== BANNERS COLLECTION ====================
+    match /banners/{bannerId} {
+      // Public read access so home screen can display carousel
+      allow read: if true;
+      // Only admins manage banners via backend API (rules elsewhere)
+      allow write: if isAdmin();
+    }
+
+    // ==================== NEWS TICKER COLLECTION ====================
+    match /news_ticker/{newsId} {
+      // Public access for published announcements
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // ==================== SHIPPING REQUESTS COLLECTION ====================
+    match /shippingRequests/{requestId} {
+      // Allow anyone to create (guest users without auth)
+      // Accepts either clientEmail or senderEmail for guest requests
+      allow create: if request.resource.data.keys().hasAll(['status']) &&
+                       request.resource.data.status == 'pending' &&
+                       (request.resource.data.keys().hasAny(['clientEmail', 'senderEmail']) ||
+                        request.resource.data.keys().hasAny(['requesterEmail']));
+
+      // Allow public read for tracking (by anyone with request ID)
+      // Security through obscurity - only share tracking number with customer
+      allow read: if true;
+
+      // Allow update: admin can update status, notes, tracking number, etc.
+      allow update: if isAdmin();
+
+      // Allow delete: admin only
+      allow delete: if isAdmin();
+    }
+
+    // ==================== AFFILIATES COLLECTION ====================
+    match /affiliates/{affiliateId} {
+      // Affiliate can read their own profile
+      allow read: if isAuthenticated() && request.auth.uid == affiliateId;
+      // Affiliate can update their own profile (limited fields)
+      allow update: if isAuthenticated() && request.auth.uid == affiliateId;
+      // Cloud Functions can create/update
+      allow create: if request.auth != null;
+    }
+
+    // ==================== COMMISSIONS COLLECTION ====================
+    match /commissions/{commissionId} {
+      // Affiliate can read their own commissions
+      allow read: if isAuthenticated() &&
+        (resource.data.affiliateId == request.auth.uid || isAdmin());
+      // Cloud Functions create commissions
+      allow create: if request.auth != null;
+      // Admins can update commissions
+      allow update: if isAdmin();
+    }
+
+    // ==================== PAYOUTS COLLECTION ====================
+    match /payouts/{payoutId} {
+      // Affiliate can read their own payouts
+      allow read: if isAuthenticated() &&
+        (resource.data.affiliateId == request.auth.uid || isAdmin());
+      // Cloud Functions create payouts
+      allow create: if request.auth != null;
+      // Admins can update payouts
+      allow update: if isAdmin();
+    }
+
+    // ==================== AFFILIATE TOKENS COLLECTION ====================
+    match /affiliate_tokens/{tokenId} {
+      // Anyone authenticated can read tokens
+      allow read: if isAuthenticated();
+      // Affiliate can generate tokens
+      allow create: if isAffiliate(resource.data.affiliateId) || isAdmin();
+    }
+
+    // ==================== NOTIFICATIONS COLLECTION ====================
+    match /notifications/{notificationId} {
+      // Allow anyone to read their own notifications
+      allow read: if isAuthenticated() &&
+                     (resource.data.targetUserId == request.auth.uid ||
+                      resource.data.targetRole in ['admin', 'superadmin']);
+
+      // Allow anyone authenticated to create notifications
+      allow create: if isAuthenticated();
+
+      // Allow users to mark their own as read
+      allow update: if isAuthenticated() &&
+                     (resource.data.targetUserId == request.auth.uid ||
+                      resource.data.targetRole in ['admin', 'superadmin']);
+    }
+
+    // ==================== USERS COLLECTION ====================
+    match /users/{userId} {
+      // Users can read their own profile
+      allow read: if isAuthenticated() && request.auth.uid == userId;
+
+      // Cloud Functions (auth triggers) can create user profiles
+      allow create: if request.auth != null && request.auth.uid == userId;
+
+      // Users can update their own profile (limited fields)
+      allow update: if isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // ==================== ACTIVITY LOGS COLLECTION ====================
+    match /activity_logs/{logId} {
+      // Cloud Functions can create logs
+      allow create: if request.auth != null;
+
+      // Admins can read activity logs
+      allow read: if isAdmin();
+    }
+
+    // ==================== ADMIN ACTIVITY LOGS COLLECTION ====================
+    match /admin_activity_logs/{logId} {
+      // Cloud Functions can create logs
+      allow create: if request.auth != null;
+
+      // Admins can read activity logs (including aggregation queries)
+      allow read: if isAdmin();
+      allow get: if isAdmin();
+      allow list: if isAdmin();
+    }
+
+    // ==================== CONTENT PAGES COLLECTION ====================
+    match /content_pages/{pageId} {
+      // Admins can read all pages
+      allow read: if isAdmin();
+
+      // Admins can create pages
+      allow create: if isAdmin();
+
+      // Admins can update pages
+      allow update: if isAdmin();
+
+      // Admins can delete pages
+      allow delete: if isAdmin();
+    }
+
+    // ==================== FAQs COLLECTION ====================
+    match /faqs/{faqId} {
+      // Admins can read all FAQs
+      allow read: if isAdmin();
+
+      // Admins can create FAQs
+      allow create: if isAdmin();
+
+      // Admins can update FAQs
+      allow update: if isAdmin();
+
+      // Admins can delete FAQs
+      allow delete: if isAdmin();
+    }
+
+    // ==================== EMAIL TEMPLATES COLLECTION ====================
+    match /email_templates/{templateId} {
+      // Admins can read all templates
+      allow read: if isAdmin();
+
+      // Admins can create templates
+      allow create: if isAdmin();
+
+      // Admins can update templates
+      allow update: if isAdmin();
+
+      // Admins can delete templates
+      allow delete: if isAdmin();
+    }
+
+    // ==================== CONTENT AUDIT LOGS COLLECTION ====================
+    match /content_audit_logs/{logId} {
+      // Cloud Functions can create logs
+      allow create: if request.auth != null;
+
+      // Admins can read audit logs
+      allow read: if isAdmin();
+
+      // Audit logs are read-only (no update/delete)
+      allow update, delete: if false;
+    }
+
+    // ==================== INVOICES COLLECTION ====================
+    match /invoices/{invoiceId} {
+      // Affiliate can read their own invoices
+      allow read: if isAuthenticated() &&
+        (resource.data.affiliateId == request.auth.uid || isAdmin());
+      // Cloud Functions create invoices
+      allow create: if request.auth != null;
+      // Admins can update invoices
+      allow update: if isAdmin();
+    }
+
+    // ==================== DEFAULT DENY ====================
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

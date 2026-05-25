@@ -1,0 +1,7 @@
+No FLUTTERWAVE_SECRET_KEY configured — Flutterwave endpoints will fail
+No PAYSTACK_SECRET_KEY configured — Paystack endpoints will fail
+better-sqlite3 not available, falling back to file-based DB. To enable SQLite, install build tools and run npm install. Error: Cannot find module 'better-sqlite3'
+Require stack:
+- C:\projects\shopsnports\server\db.js
+- C:\projects\shopsnports\server\webhooks.js
+- C:\projects\shopsnports\server\index.js

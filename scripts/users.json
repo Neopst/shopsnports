@@ -1,0 +1,74 @@
+{"users": [
+{
+  "localId": "1fivDtMHKiOX2bN6BUPgnDGTFi42",
+  "email": "admin0@shopsnports.com",
+  "emailVerified": false,
+  "passwordHash": "YYwdBp76a/At67mC/W1xY8tsHA51u3v7TkcnEyNLwtZ78UWpSzW8yCGvkJjraGGYrEu+HKD7py7+9+V/hgidGw==",
+  "salt": "VTM1vTBYoJgMrg==",
+  "lastSignedInAt": "1766412613911",
+  "createdAt": "1762264742900",
+  "disabled": false,
+  "providerUserInfo": []
+},
+{
+  "localId": "MDrV360T6BVSZ7tsR4RKYQPkEnL2",
+  "email": "affiliate@shopsnports.com",
+  "emailVerified": false,
+  "passwordHash": "VltX0ZApkhrNKHjMQtv5/AJOuRDSdmXgIwGC/osQXBmCy03O0kbEs5q2zmBhQq9xJ9Kd+MSaQmjPV7dVU+9vWQ==",
+  "salt": "wisgDMpNdmKhdQ==",
+  "createdAt": "1760279417069",
+  "disabled": false,
+  "providerUserInfo": []
+},
+{
+  "localId": "NORcQVXwqDVZTOLV9l62Lfn6D9q2",
+  "email": "vendor@shopsnports.com",
+  "emailVerified": false,
+  "passwordHash": "0EnGnY33jwEjTUkMnMd4Z5hJw566Aw7dsZLqbrBVJY/8Ca7lLtI17QqYHvbOlU7hUJMhyAGWtOhjVG3YvoVhiw==",
+  "salt": "RHtVLYFo3Y2I1w==",
+  "createdAt": "1760279395575",
+  "disabled": false,
+  "providerUserInfo": []
+},
+{
+  "localId": "ofzr1Pce64MXlbvOLmNFWMeovMK2",
+  "email": "user@shopsnports.com",
+  "emailVerified": false,
+  "passwordHash": "A7HalK8woDz0UGaf03zqk/BSgK/bFZA09gj+jNcbglwOCIhhqNhJ9CRsppYXhJpTAdQqdKpJQObuvD+XWlouWQ==",
+  "salt": "CWZPvLzsy9xXiA==",
+  "lastSignedInAt": "1760281518537",
+  "createdAt": "1760279351881",
+  "disabled": false,
+  "providerUserInfo": []
+},
+{
+  "localId": "onKwFWGTpaRBViQ28DY9gXzjWzK2",
+  "email": "tester@shopsnports.com",
+  "emailVerified": false,
+  "passwordHash": "SRGwh+mM7NU5OzbqlIDKHwPr5SN3LP5ZGzWV/7tppD5IGRqGoGmLqxvzU2cAFS4/GMWc55BDodqXtqh1nXQD3w==",
+  "salt": "CeY2NwYn5Fuoew==",
+  "createdAt": "1767241578455",
+  "disabled": false,
+  "providerUserInfo": []
+},
+{
+  "localId": "uvmRV7XA3SRMOtK9JK9BgSp3Mp83",
+  "email": "dipoenville1@gmail.com",
+  "emailVerified": false,
+  "passwordHash": "H3JXbaevjxZKsPXasVkcG3teFvTSUXIqtboEcYEdq3Hh6jCaPaurhqHxkWYsuCoDN/JPMc+y4gok7yQ8FtWcpg==",
+  "salt": "dkKzfUJM/mG+3Q==",
+  "lastSignedInAt": "1766491713425",
+  "createdAt": "1755554544195",
+  "disabled": false,
+  "providerUserInfo": []
+},
+{
+  "localId": "ysQ62WwNf4cj9n41GMSHwXQc3By1",
+  "email": "admin@shopsnports.com",
+  "emailVerified": false,
+  "passwordHash": "5U8QQkOJISLNdhnBU4UBQj8my77dlIe+mNPyImlpoBWl/F2yMW/ikWCTHAvaLy8KL5LW6qS8qQCztDPu1akV8g==",
+  "salt": "Os2mRioLaCrXgw==",
+  "createdAt": "1760279374704",
+  "disabled": false,
+  "providerUserInfo": []
+}]}

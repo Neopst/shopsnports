@@ -1,0 +1,9 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shopsnports/services/firestore_service.dart';
+import 'package:shopsnports/providers/firestore_provider.dart';
+
+final firestoreServiceProvider = Provider<FirestoreService>((ref) {
+  // Inject the central Firestore from firestoreProvider so tests can override it.
+  final db = ref.read(firestoreProvider);
+  return FirestoreService(db);
+});

@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "1056553474485",
+    "project_id": "shopsnports",
+    "storage_bucket": "shopsnports.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1056553474485:android:f8cf9c573a24361a4ea1fc",
+        "android_client_info": {
+          "package_name": "com.example.shopsnports"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1056553474485-otvjebbhhleo175gbs5cbc984rnhl1cp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLvOSiAdbWBqoQHFa0V-yLYKVU_AB_WZo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1056553474485-otvjebbhhleo175gbs5cbc984rnhl1cp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1056553474485-9elpnreelh3r1ihbfoejgld9plgjt2fc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.shopsnports"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1056553474485:android:13b3707c365b9e004ea1fc",
+        "android_client_info": {
+          "package_name": "com.example.shopsnports2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1056553474485-k482mjuem48a25vkbu0p1ds1q3fijtpj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.shopsnports2",
+            "certificate_hash": "d758b31f836833f11ee441953babe296e6f52409"
+          }
+        },
+        {
+          "client_id": "1056553474485-otvjebbhhleo175gbs5cbc984rnhl1cp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLvOSiAdbWBqoQHFa0V-yLYKVU_AB_WZo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1056553474485-otvjebbhhleo175gbs5cbc984rnhl1cp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1056553474485-9elpnreelh3r1ihbfoejgld9plgjt2fc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.shopsnports"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

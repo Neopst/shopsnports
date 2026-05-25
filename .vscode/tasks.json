@@ -1,0 +1,37 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run Unit Tests",
+			"type": "shell",
+			"command": "flutter test test/unit/ --reporter=expanded",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "test"
+		},
+		{
+			"label": "Build Admin Web",
+			"type": "shell",
+			"command": "cd admin/admin && flutter build web --release",
+			"group": "build"
+		},
+		{
+			"label": "Build Admin Web",
+			"type": "shell",
+			"command": "cd admin/admin; flutter build web --release",
+			"group": "build"
+		},
+		{
+			"label": "Build Admin Dashboard",
+			"type": "shell",
+			"command": "Push-Location admin\\admin; flutter build web --release; Pop-Location",
+			"group": "build"
+		},
+		{
+			"label": "Build Admin Dashboard Web",
+			"type": "shell",
+			"command": "Push-Location admin\\admin; flutter build web --release; Pop-Location",
+			"group": "build"
+		}
+	]
+}

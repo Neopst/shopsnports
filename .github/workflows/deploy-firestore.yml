@@ -1,0 +1,50 @@
+name: Deploy Firestore Rules & Indexes
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment (staging or production)'
+        required: true
+        default: 'staging'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Firebase Tools
+        run: npm install -g firebase-tools@11
+
+      - name: Authenticate Firebase
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: |
+          if [ -z "$FIREBASE_TOKEN" ]; then
+            echo "FIREBASE_TOKEN secret missing"; exit 1
+          fi
+          firebase login:ci --token "$FIREBASE_TOKEN" || true
+
+      - name: Select Project
+        id: select
+        run: |
+          if [ "${{ github.event.inputs.environment }}" = "production" ]; then
+            echo "PROJECT_ID=${{ secrets.PROJECT_ID_PRODUCTION }}" >> $GITHUB_OUTPUT
+          else
+            echo "PROJECT_ID=${{ secrets.PROJECT_ID_STAGING }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Deploy Firestore Rules
+        run: |
+          firebase deploy --only firestore:rules --project ${{ steps.select.outputs.PROJECT_ID }}
+
+      - name: Deploy Firestore Indexes
+        run: |
+          firebase deploy --only firestore:indexes --project ${{ steps.select.outputs.PROJECT_ID }}

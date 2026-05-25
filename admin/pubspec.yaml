@@ -1,0 +1,89 @@
+name: admin_dashboard
+description: "A new Flutter project."
+publish_to: 'none' # Prevent accidental publishing
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State management
+  flutter_riverpod: ^3.3.1
+
+  # Routing
+  go_router: ^17.2.3
+
+  # Networking
+  dio: ^5.4.0
+
+  # Firebase core + auth
+  firebase_core: ^4.8.0
+  firebase_auth: ^6.5.0
+  cloud_firestore: ^6.4.0
+  firebase_storage: ^13.4.0  # For uploading banner images
+  firebase_messaging: ^16.2.1  # Push notifications
+  cloud_functions: ^6.3.0  # Cloud Functions for email sending
+
+  # Utilities
+  uuid: ^4.0.0
+  random_string: ^2.3.0  # For generating secure passwords
+  html: ^0.15.4  # HTML sanitization
+  csv: ^5.1.1  # CSV export/import
+  share_plus: ^12.0.2  # File sharing
+  path_provider: ^2.1.1  # File system access
+
+  # UI utilities
+  data_table_2: ^2.5.9
+  fl_chart: ^1.1.1
+  flutter_form_builder: ^10.2.0
+  intl: ^0.20.2
+  confetti: ^0.8.0
+
+  # Secure storage
+  flutter_secure_storage: ^10.2.0
+  
+  # Shared preferences for currency settings
+  shared_preferences: ^2.5.4
+
+  # File picker for logo upload
+  file_picker: ^8.0.0
+
+  # URL launcher for opening documents
+  url_launcher: ^6.3.1
+
+  # PDF generation
+  pdf: ^3.10.7
+  printing: ^5.11.1
+
+  # Icons
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/icons/1.jpg
+    - assets/icons/2.jpg
+    - assets/icons/3.jpg
+    - assets/icons/4.jpg
+    - assets/icons/5.jpg
+    - assets/icons/6.jpg
+    - assets/icons/7.jpg
+    - assets/icons/8.jpg
+    - assets/icons/9.jpg
+    - assets/icons/10.jpg
+    - assets/icons/11.jpg
+    - assets/icons/12.jpg
+    - assets/icons/logo.png
+    - assets/icons/logo.jpg
+    - assets/icons/face1.png
+    - assets/icons/face2.png

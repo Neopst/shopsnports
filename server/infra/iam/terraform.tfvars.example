@@ -1,0 +1,11 @@
+# Example terraform.tfvars for creating the GitHub OIDC deploy role
+aws_account_id = "123456789012"
+region = "us-east-1"
+github_org = "your-org"
+github_repo = "shopsnports"
+# Optional: restrict to a specific cluster/service and pass-role ARNs
+ecs_cluster_arn = "arn:aws:ecs:us-east-1:123456789012:cluster/shopsnports-cluster"
+ecs_service_arn = "arn:aws:ecs:us-east-1:123456789012:service/shopsnports-cluster/shopsnports-service"
+# Optional: if you have pre-created roles, provide them; otherwise leave blank
+task_role_arn = ""
+execution_role_arn = ""

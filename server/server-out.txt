@@ -1,0 +1,3 @@
+Received uncaughtException, closing server...
+DB pool closed
+Shutdown complete

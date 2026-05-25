@@ -1,0 +1,20 @@
+{
+  "test-ref-123": {
+    "provider": "paystack",
+    "lastEvent": "charge.success",
+    "data": {
+      "reference": "test-ref-123",
+      "amount": 1000
+    },
+    "updatedAt": "2025-10-09T07:59:52.859Z"
+  },
+  "fw-ref-xyz": {
+    "provider": "flutterwave",
+    "lastEvent": "payment.completed",
+    "data": {
+      "tx_ref": "fw-ref-xyz",
+      "amount": 2500
+    },
+    "updatedAt": "2025-10-09T07:59:53.417Z"
+  }
+}

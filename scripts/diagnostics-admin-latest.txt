@@ -1,0 +1,328 @@
+﻿Shopsnports Admin Diagnostics - 20251021-212216
+
+Environment
+PWD: C:\projects\shopsnports
+Node version: v22.18.0
+NPM version: 10.9.3
+PowerShell: 5.1.19041.6456
+
+Listening ports (netstat)
+No listeners found on :3000 or :3001
+
+Node processes (node.exe)
+PID: 5848  Name: node  Start: 21/10/2025 21:22:04
+PID: 22000  Name: node  Start: 21/10/2025 12:58:00
+
+Checking http://localhost:3000/admin and assets
+http://localhost:3000/admin -> Status: 200
+Headers:
+  Content-Security-Policy: default-src 'self';script-src 'self' 'unsafe-inline';style-src 'self' 'unsafe-inline';img-src 'self' data: https:;connect-src 'self';font-src 'self' https:;object-src 'none';media-src 'self';frame-src 'none';base-uri 'self';form-action 'self';frame-ancestors 'self';script-src-attr 'none';upgrade-insecure-requests
+  Cross-Origin-Embedder-Policy: require-corp
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+  Origin-Agent-Cluster: ?1
+  Referrer-Policy: no-referrer
+  Strict-Transport-Security: max-age=15552000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  X-DNS-Prefetch-Control: off
+  X-Download-Options: noopen
+  X-Frame-Options: SAMEORIGIN
+  X-Permitted-Cross-Domain-Policies: none
+  X-XSS-Protection: 0
+  Vary: Accept-Encoding
+  Connection: keep-alive
+  Keep-Alive: timeout=5
+  Accept-Ranges: bytes
+  Content-Length: 534
+  Cache-Control: public, max-age=0
+  Content-Type: text/html; charset=UTF-8
+  Date: Tue, 21 Oct 2025 20:22:17 GMT
+  ETag: W/"216-19a06e3227f"
+  Last-Modified: Tue, 21 Oct 2025 13:09:00 GMT
+  Set-Cookie: connect.sid=s%3Ax-4oHKRRPcVygROQ20IuGxrRnmR05_yK.vTs1d9JDy6v5pGpeMeXh%2FTdlS%2FJ2eC6GAYNLsNffIxc; Path=/; HttpOnly; SameSite=Lax
+http://localhost:3000/admin/ui/build/index.html -> 200  Length: 390
+http://localhost:3000/admin/ui/build/main.dart.js -> 200  Length: 2478942
+http://localhost:3000/admin/ui/build/main.dart.v20251021.js -> 200  Length: 2478942
+http://localhost:3000/admin/ui/build/flutter_service_worker.js -> 200  Length: 9021
+http://localhost:3000/admin/ui/build/version.json -> 200  Length: 77
+
+Checking http://localhost:3001/admin and assets
+http://localhost:3001/admin -> Status: 200
+Headers:
+  Content-Security-Policy: default-src 'self';script-src 'self' 'unsafe-inline';style-src 'self' 'unsafe-inline';img-src 'self' data: https:;connect-src 'self';font-src 'self' https:;object-src 'none';media-src 'self';frame-src 'none';base-uri 'self';form-action 'self';frame-ancestors 'self';script-src-attr 'none';upgrade-insecure-requests
+  Cross-Origin-Embedder-Policy: require-corp
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+  Origin-Agent-Cluster: ?1
+  Referrer-Policy: no-referrer
+  Strict-Transport-Security: max-age=15552000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  X-DNS-Prefetch-Control: off
+  X-Download-Options: noopen
+  X-Frame-Options: SAMEORIGIN
+  X-Permitted-Cross-Domain-Policies: none
+  X-XSS-Protection: 0
+  Pragma: no-cache
+  Vary: Accept-Encoding
+  Connection: keep-alive
+  Keep-Alive: timeout=5
+  Accept-Ranges: bytes
+  Content-Length: 390
+  Cache-Control: no-cache, no-store, must-revalidate
+  Content-Type: text/html; charset=UTF-8
+  Date: Tue, 21 Oct 2025 20:22:28 GMT
+  Expires: 0
+  ETag: W/"186-19a073a97d7"
+  Last-Modified: Tue, 21 Oct 2025 14:44:31 GMT
+http://localhost:3001/admin/ui/build/index.html -> 200  Length: 390
+http://localhost:3001/admin/ui/build/main.dart.js -> 200  Length: 2478942
+http://localhost:3001/admin/ui/build/main.dart.v20251021.js -> 200  Length: 2478942
+http://localhost:3001/admin/ui/build/flutter_service_worker.js -> 200  Length: 9021
+http://localhost:3001/admin/ui/build/version.json -> 200  Length: 77
+
+Build dir: C:\projects\shopsnports\scripts\..\server\public\admin\build
+C:\projects\shopsnports\server\public\admin\build\main.dart.v20251021.js  2478942 bytes  modified: 21/10/2025 14:50:41
+C:\projects\shopsnports\server\public\admin\build\main.dart.js  2478942 bytes  modified: 21/10/2025 14:50:41
+C:\projects\shopsnports\server\public\admin\build\NOTICES  2257209 bytes  modified: 21/10/2025 13:45:11
+C:\projects\shopsnports\server\public\admin\build\flutter_bootstrap.js  9757 bytes  modified: 21/10/2025 13:43:53
+C:\projects\shopsnports\server\public\admin\build\flutter.js  9429 bytes  modified: 21/10/2025 13:40:52
+C:\projects\shopsnports\server\public\admin\build\flutter_service_worker.js  9021 bytes  modified: 21/10/2025 15:21:28
+C:\projects\shopsnports\server\public\admin\build\shaders\ink_sparkle.frag  8867 bytes  modified: 21/10/2025 13:45:12
+C:\projects\shopsnports\server\public\admin\build\fonts\MaterialIcons-Regular.otf  7736 bytes  modified: 21/10/2025 13:45:16
+C:\projects\shopsnports\server\public\admin\build\main.dart.js.bak.20251021T184500  3800 bytes  modified: 21/10/2025 14:27:25
+C:\projects\shopsnports\server\public\admin\build\index.html  390 bytes  modified: 21/10/2025 15:44:31
+C:\projects\shopsnports\server\public\admin\build\FontManifest.json  82 bytes  modified: 21/10/2025 13:45:11
+C:\projects\shopsnports\server\public\admin\build\version.json  77 bytes  modified: 21/10/2025 13:45:10
+C:\projects\shopsnports\server\public\admin\build\.last_build_id  32 bytes  modified: 21/10/2025 13:41:52
+C:\projects\shopsnports\server\public\admin\build\AssetManifest.bin.json  6 bytes  modified: 21/10/2025 13:45:11
+C:\projects\shopsnports\server\public\admin\build\AssetManifest.bin  2 bytes  modified: 21/10/2025 13:45:11
+\nSearching main.dart.js for 'localhost' occurrences (first 20 lines):
+if(q.a(r.h(0,0))==null)A.a6(A.bd('The app requested a view, but the platform did not provide one.\nThis is likely because the app called `runApp` to render its root widget, which expects the platform to provide a default view to render into (the "implicit" view).\nHowever, the platform likely has multi-view mode enabled, which does not create this default "implicit" view.\nTry using `runWidget` instead of `runApp` to start your app.\n`runWidget` allows you to provide a `View` widget, without requiring a default view.\nSee: https://flutter.dev/to/web-multiview-runwidget'))
+throw A.i(A.ln(A.c([A.iD("Scaffold.of() called with a context that does not contain a Scaffold."),A.bn("No Scaffold ancestor could be found starting from the context that was passed to Scaffold.of(). This usually happens when the context provided is from the same StatefulWidget as that whose build function actually creates the Scaffold widget being sought."),A.wO('There are several ways to avoid this problem. The simplest is to use a Builder to get a context that is "under" the Scaffold. For an example of this, please see the documentation for Scaffold.of():\n  https://api.flutter.dev/flutter/material/Scaffold/of.html'),A.wO("A more efficient solution is to split your build function into several widgets. This introduces a new context from which you can obtain the Scaffold. In this solution, you would have an outer widget that creates the Scaffold populated by instances of your new inner widgets, and then in these inner widgets you would use Scaffold.of().\nA less elegant but more expedient solution is assign a GlobalKey to the Scaffold, then use the key.currentState property to obtain the ScaffoldState rather than using the Scaffold.of() function."),a.agc("The context used was")],t.p)))},
+return(s==null?"https://www.gstatic.com/flutter-canvaskit/8b04c41e971dc1d6366bf023db86bc58cba5b1ea/":s)+a},
+return s==null?"https://fonts.gstatic.com/s/":s}}
+if(e.length!==0)if(c.c.a===0){$.ec().$1("Could not find a set of Noto fonts to display all missing characters. Please add a font asset for the missing characters. See: https://flutter.dev/docs/cookbook/design/fonts")
+if(!p)s.window.console.warn("The `assetBase` meta tag is now deprecated.\nUse engineInitializer.initializeEngine(config) instead.\nSee: https://docs.flutter.dev/development/platform-integration/web/initialization")
+k=A.h0("http://localhost:3001/admin/login")
+return A.a0(A.aNJ(A.h0("http://localhost:3001/admin/users?limit=10&offset="+n.d*10)),$async$oC)
+G(a,b){throw A.i(A.ln(A.c([A.iD('There was an attempt to access the "'+b.gTo().k(0)+'" field of a WidgetStateMapper<'+A.bz(this.$ti.c).k(0)+"> object."),A.bn(this.k(0)),A.bn("WidgetStateProperty objects should only be used in places that document their support."),A.wO('Double-check whether the map was used in a place that documents support for WidgetStateProperty objects. If so, please file a bug report. (The https://pub.dev/ page for a package contains a link to "View/report issues".)')],t.p)))},
+\nService worker contents (first 200 lines):
+'use strict';
+// Minimal service worker: clear caches and claim clients immediately.
+// This helps in dev when an old Flutter service worker cached a stale
+// app shell and the page appears blank. It intentionally performs no
+// offline caching and will let the browser fetch resources from the
+// network on each load.
+
+self.addEventListener('install', (event) => {
+  // Activate immediately
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil((async () => {
+    try {
+      const keys = await caches.keys();
+      await Promise.all(keys.map(k => caches.delete(k)));
+    } catch (e) {
+      // ignore
+    }
+    await self.clients.claim();
+  })());
+});
+
+// Do not intercept fetches; allow network to handle everything to avoid
+// serving stale resources.
+self.addEventListener('fetch', (event) => {
+  // noop - fallback to network
+});
+
+// Note: This file intentionally replaces the Flutter-generated service
+// worker temporarily to resolve stale-cache problems during development.
+'use strict';
+const MANIFEST = 'flutter-app-manifest';
+const TEMP = 'flutter-temp-cache';
+const CACHE_NAME = 'flutter-app-cache';
+
+const RESOURCES = {"assets/AssetManifest.bin": "0b0a3415aad49b6e9bf965ff578614f9",
+"assets/AssetManifest.bin.json": "a1fee2517bf598633e2f67fcf3e26c94",
+"assets/FontManifest.json": "7b2a36307916a9721811788013e65289",
+"assets/fonts/MaterialIcons-Regular.otf": "c0ad29d56cfe3890223c02da3c6e0448",
+"assets/NOTICES": "e56d4dc819cf1366b5c405b81119976a",
+"assets/shaders/ink_sparkle.frag": "ecc85a2e95f5e9f53123dcaf8cb9b6ce",
+"canvaskit/canvaskit.js": "140ccb7d34d0a55065fbd422b843add6",
+"canvaskit/canvaskit.js.symbols": "ca1ac75593200e06c795741fb6a54b84",
+"canvaskit/canvaskit.wasm": "06aad65aadc776084238a15849714dcd",
+"canvaskit/chromium/canvaskit.js": "5e27aae346eee469027c80af0751d53d",
+"canvaskit/chromium/canvaskit.js.symbols": "35dbe12a7a4026abf96733b3b6e1beac",
+"canvaskit/chromium/canvaskit.wasm": "690edfa888e849409ba360df1c67b5fd",
+"canvaskit/skwasm.js": "1ef3ea3a0fec4569e5d531da25f34095",
+"canvaskit/skwasm.js.symbols": "4a9f42d5c89536a5ae0f4da25929f39c",
+"canvaskit/skwasm.wasm": "e675b6b910a2f8d107ebe29355976dfa",
+"canvaskit/skwasm_heavy.js": "413f5b2b2d9345f37de148e2544f584f",
+"canvaskit/skwasm_heavy.js.symbols": "aac467147290ae18f979a03c864047b1",
+"canvaskit/skwasm_heavy.wasm": "8b843907b234854e2291b89e27139935",
+"flutter.js": "35408b1be0f5de68cc5d1c5175d717ed",
+"flutter_bootstrap.js": "4ce9cc9dda8a218fa55fd4f952b2bbdc",
+"index.html": "ea7a8f4c019a3b6c065d01740ae4b8d8",
+"/": "ea7a8f4c019a3b6c065d01740ae4b8d8",
+"main.dart.js": "b3590b2aafdb026d2f4e0ad08e4e6196",
+"version.json": "978df3f380148e08bc6736c15d48f0f9"};
+// The application shell files that are downloaded before a service worker can
+// start.
+const CORE = ["main.dart.js",
+"index.html",
+"flutter_bootstrap.js",
+"assets/AssetManifest.bin.json",
+"assets/FontManifest.json"];
+
+// During install, the TEMP cache is populated with the application shell files.
+self.addEventListener("install", (event) => {
+  self.skipWaiting();
+  return event.waitUntil(
+    caches.open(TEMP).then((cache) => {
+      return cache.addAll(
+        CORE.map((value) => new Request(value, {'cache': 'reload'})));
+    })
+  );
+});
+// During activate, the cache is populated with the temp files downloaded in
+// install. If this service worker is upgrading from one with a saved
+// MANIFEST, then use this to retain unchanged resource files.
+self.addEventListener("activate", function(event) {
+  return event.waitUntil(async function() {
+    try {
+      var contentCache = await caches.open(CACHE_NAME);
+      var tempCache = await caches.open(TEMP);
+      var manifestCache = await caches.open(MANIFEST);
+      var manifest = await manifestCache.match('manifest');
+      // When there is no prior manifest, clear the entire cache.
+      if (!manifest) {
+        await caches.delete(CACHE_NAME);
+        contentCache = await caches.open(CACHE_NAME);
+        for (var request of await tempCache.keys()) {
+          var response = await tempCache.match(request);
+          await contentCache.put(request, response);
+        }
+        await caches.delete(TEMP);
+        // Save the manifest to make future upgrades efficient.
+        await manifestCache.put('manifest', new Response(JSON.stringify(RESOURCES)));
+        // Claim client to enable caching on first launch
+        self.clients.claim();
+        return;
+      }
+      var oldManifest = await manifest.json();
+      var origin = self.location.origin;
+      for (var request of await contentCache.keys()) {
+        var key = request.url.substring(origin.length + 1);
+        if (key == "") {
+          key = "/";
+        }
+        // If a resource from the old manifest is not in the new cache, or if
+        // the MD5 sum has changed, delete it. Otherwise the resource is left
+        // in the cache and can be reused by the new service worker.
+        if (!RESOURCES[key] || RESOURCES[key] != oldManifest[key]) {
+          await contentCache.delete(request);
+        }
+      }
+      // Populate the cache with the app shell TEMP files, potentially overwriting
+      // cache files preserved above.
+      for (var request of await tempCache.keys()) {
+        var response = await tempCache.match(request);
+        await contentCache.put(request, response);
+      }
+      await caches.delete(TEMP);
+      // Save the manifest to make future upgrades efficient.
+      await manifestCache.put('manifest', new Response(JSON.stringify(RESOURCES)));
+      // Claim client to enable caching on first launch
+      self.clients.claim();
+      return;
+    } catch (err) {
+      // On an unhandled exception the state of the cache cannot be guaranteed.
+      console.error('Failed to upgrade service worker: ' + err);
+      await caches.delete(CACHE_NAME);
+      await caches.delete(TEMP);
+      await caches.delete(MANIFEST);
+    }
+  }());
+});
+// The fetch handler redirects requests for RESOURCE files to the service
+// worker cache.
+self.addEventListener("fetch", (event) => {
+  if (event.request.method !== 'GET') {
+    return;
+  }
+  var origin = self.location.origin;
+  var key = event.request.url.substring(origin.length + 1);
+  // Redirect URLs to the index.html
+  if (key.indexOf('?v=') != -1) {
+    key = key.split('?v=')[0];
+  }
+  if (event.request.url == origin || event.request.url.startsWith(origin + '/#') || key == '') {
+    key = '/';
+  }
+  // If the URL is not the RESOURCE list then return to signal that the
+  // browser should take over.
+  if (!RESOURCES[key]) {
+    return;
+  }
+  // If the URL is the index.html, perform an online-first request.
+  if (key == '/') {
+    return onlineFirst(event);
+  }
+  event.respondWith(caches.open(CACHE_NAME)
+    .then((cache) =>  {
+      return cache.match(event.request).then((response) => {
+        // Either respond with the cached resource, or perform a fetch and
+        // lazily populate the cache only if the resource was successfully fetched.
+        return response || fetch(event.request).then((response) => {
+          if (response && Boolean(response.ok)) {
+            cache.put(event.request, response.clone());
+          }
+          return response;
+        });
+      })
+    })
+  );
+});
+self.addEventListener('message', (event) => {
+  // SkipWaiting can be used to immediately activate a waiting service worker.
+  // This will also require a page refresh triggered by the main worker.
+  if (event.data === 'skipWaiting') {
+    self.skipWaiting();
+    return;
+  }
+  if (event.data === 'downloadOffline') {
+    downloadOffline();
+    return;
+  }
+});
+// Download offline will check the RESOURCES for all files not in the cache
+// and populate them.
+async function downloadOffline() {
+  var resources = [];
+  var contentCache = await caches.open(CACHE_NAME);
+  var currentContent = {};
+  for (var request of await contentCache.keys()) {
+    var key = request.url.substring(origin.length + 1);
+    if (key == "") {
+      key = "/";
+\nindex.html contents (first 200 lines):
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopsnports Admin</title>
+  </head>
+  <body>
+    <!-- Cache-busted bundle name to force clients to fetch the new file and avoid stale service-worker caches -->
+    <script src="main.dart.v20251021.js"></script>
+  </body>
+</html>
+\nLast 200 lines of server.log:
+ShopsNports payment example server listening at http://localhost:3000
+[0mGET /health [32m200[0m 10.965 ms - 69[0m
+[0mGET /flutterwave/public-key [31m500[0m 1.440 ms - 46[0m
+[0mGET /paystack/credentials [32m200[0m 2.149 ms - 18[0m
+\nDiagnostics complete.

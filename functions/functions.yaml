@@ -1,0 +1,100 @@
+# Functions configuration for Firebase deployment
+# This file helps bypass the local server analysis on Windows
+
+specVersion: 'v1alpha1'
+name: shopsnports-functions
+region: us-central1
+runtime: nodejs18
+
+build:
+  source: functions/
+  serviceAccount: shopsnports@appspot.gserviceaccount.com
+
+# List all functions to deploy
+functions:
+  - name: shippingRequestCreated
+    entryPoint: shippingRequestCreated
+  - name: shippingRequestUpdated
+    entryPoint: shippingRequestUpdated
+  - name: shipmentDelivered
+    entryPoint: shipmentDelivered
+  - name: generateScheduledPayouts
+    entryPoint: generateScheduledPayouts
+  - name: admin
+    entryPoint: admin
+  - name: calculateAffiliateCommission
+    entryPoint: calculateAffiliateCommission
+  - name: generatePayment
+    entryPoint: generatePayment
+  - name: processPayment
+    entryPoint: processPayment
+  - name: bulkProcessPayments
+    entryPoint: bulkProcessPayments
+  - name: exportPayments
+    entryPoint: exportPayments
+  - name: createInvoice
+    entryPoint: createInvoice
+  - name: createInvoiceHttp
+    entryPoint: createInvoiceHttp
+  - name: getAffiliateTokens
+    entryPoint: getAffiliateTokens
+  - name: adminCreateAffiliateTokens
+    entryPoint: adminCreateAffiliateTokens
+  - name: checkAffiliateToken
+    entryPoint: checkAffiliateToken
+  - name: createFormShareLink
+    entryPoint: createFormShareLink
+  - name: processFormShare
+    entryPoint: processFormShare
+  - name: checkFormShareAnalytics
+    entryPoint: checkFormShareAnalytics
+  - name: cleanupFormShares
+    entryPoint: cleanupFormShares
+  - name: cleanupRateLimits
+    entryPoint: cleanupRateLimits
+  - name: systemHealthCheck
+    entryPoint: systemHealthCheck
+  - name: collectMetrics
+    entryPoint: collectMetrics
+  - name: createNewAdmin
+    entryPoint: createNewAdmin
+  - name: resetAdminPasswordFn
+    entryPoint: resetAdminPasswordFn
+  - name: recordAdminActivity
+    entryPoint: recordAdminActivity
+  - name: recordAdminLogin
+    entryPoint: recordAdminLogin
+  - name: recordAdminLogout
+    entryPoint: recordAdminLogout
+  - name: fetchAdminActivityStats
+    entryPoint: fetchAdminActivityStats
+  - name: fetchAdminActivityLogs
+    entryPoint: fetchAdminActivityLogs
+  - name: fixAdminAuthClaims
+    entryPoint: fixAdminAuthClaims
+  - name: userCreated
+    entryPoint: userCreated
+  - name: affiliateCreated
+    entryPoint: affiliateCreated
+  - name: affiliateUpdated
+    entryPoint: affiliateUpdated
+  - name: onUserSignIn
+    entryPoint: onUserSignIn
+  - name: sendPushNotificationFn
+    entryPoint: sendPushNotificationFn
+  - name: notifyAllAdmins
+    entryPoint: notifyAllAdmins
+  - name: notifyShippingUpdateFn
+    entryPoint: notifyShippingUpdateFn
+  - name: processEmail
+    entryPoint: processEmail
+  - name: retryFailedEmailsFn
+    entryPoint: retryFailedEmailsFn
+  - name: sendEmail
+    entryPoint: sendEmail
+  - name: sendAffiliateEmail
+    entryPoint: sendAffiliateEmail
+  - name: grantSuperAdminFn
+    entryPoint: grantSuperAdminFn
+  - name: updateCustomClaimsFn
+    entryPoint: updateCustomClaimsFn

@@ -1,0 +1,54 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ env.ECR_REPO }}:${{ github.sha }} .
+        env:
+          ECR_REPO: 123456789012.dkr.ecr.us-east-1.amazonaws.com/shopsnports
+
+      - name: Login to ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Push image to ECR
+        run: |
+          docker tag ${{ env.ECR_REPO }}:${{ github.sha }} ${{ env.ECR_REPO }}:latest
+          docker push ${{ env.ECR_REPO }}:latest
+        env:
+          ECR_REPO: 123456789012.dkr.ecr.us-east-1.amazonaws.com/shopsnports
+
+      - name: Terraform Init & Apply
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.0
+
+      - name: Terraform Format
+        run: terraform -chdir=server/secrets/prod/aws_option_a_prod fmt -check
+
+      - name: Terraform Init
+        run: terraform -chdir=server/secrets/prod/aws_option_a_prod init -input=false
+
+      - name: Terraform Plan
+        run: terraform -chdir=server/secrets/prod/aws_option_a_prod plan -input=false -out=tfplan
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
+        run: terraform -chdir=server/secrets/prod/aws_option_a_prod apply -input=false -auto-approve tfplan

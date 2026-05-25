@@ -1,0 +1,484 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // =========================================================================
+    // Helper Functions
+    // =========================================================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isSuperAdmin() {
+      return isAuthenticated() &&
+             exists(/databases/$(database)/documents/admin_users/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/admin_users/$(request.auth.uid)).data.role == 'super_admin';
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+             exists(/databases/$(database)/documents/admin_users/$(request.auth.uid));
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function hasPermission(permission) {
+      return isAuthenticated() && 
+             request.auth.uid in get(/databases/$(database)/documents/users/$(request.auth.uid)).data.permissions;
+    }
+
+    // =========================================================================
+    // News Ticker Collection
+    // =========================================================================
+    
+    match /news_ticker/{document=**} {
+      // Public read access for published items
+      allow read: if isAuthenticated() && 
+                     (resource.data.status == 'published' || isAdmin());
+
+      // Create: Admin only
+      allow create: if isAdmin() &&
+                      request.resource.data.status in ['draft', 'scheduled'] &&
+                      request.resource.data.priority >= 1 &&
+                      request.resource.data.priority <= 10 &&
+                      request.resource.data.keys().hasAll(['title', 'content']) &&
+                      request.resource.data.title.size() > 0 &&
+                      request.resource.data.content.size() > 0;
+
+      // Update: Admin only, with validation
+      allow update: if isAdmin() &&
+                      (request.resource.data.diff(resource.data).affectedKeys()
+                        .hasOnly(['title', 'content', 'imageUrl', 'priority', 'status', 
+                                 'expiresAt', 'publishedAt', 'updatedAt', 'updatedBy'])) &&
+                      (!request.resource.data.diff(resource.data).changedKeys().hasAny(['createdBy', 'createdAt']));
+
+      // Delete: Super Admin only
+      allow delete: if isSuperAdmin();
+
+      // Publish operation (status change to published)
+      allow update: if isAdmin() &&
+                      request.resource.data.status == 'published' &&
+                      resource.data.status != 'published' &&
+                      request.resource.data.publishedAt == request.time;
+
+      // Archive operation (status change to archived)
+      allow update: if isAdmin() &&
+                      request.resource.data.status == 'archived' &&
+                      request.resource.data.archived == true;
+
+      // Schedule operation (status change to scheduled)
+      allow update: if isAdmin() &&
+                      request.resource.data.status == 'scheduled' &&
+                      request.resource.data.scheduledPublishAt > request.time;
+    }
+
+    // =========================================================================
+    // Users Collection
+    // =========================================================================
+    
+    match /users/{userId} {
+      // Users can read their own profile and basic info of others
+      allow read: if isAuthenticated() &&
+                     (request.auth.uid == userId || isAdmin());
+
+      // Users can update their own profile (limited fields)
+      allow update: if isOwner(userId) &&
+                       request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['displayName', 'photoUrl', 'email', 'preferences']) &&
+                       !request.resource.data.diff(resource.data).changedKeys()
+                         .hasAny(['role', 'permissions', 'createdAt']);
+
+      // Super admins can update role and permissions
+      allow update: if isSuperAdmin() &&
+                       request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['role', 'permissions', 'accountStatus', 'twoFactorEnabled']);
+
+      // Create: New users during signup (handled by Cloud Functions auth trigger)
+      allow create: if false; // Auth trigger creates user documents
+
+      // Delete: Super admin only
+      allow delete: if isSuperAdmin();
+    }
+
+    // =========================================================================
+    // Admin Profiles Collection
+    // =========================================================================
+    
+    match /admin_profiles/{adminId} {
+      // Admins can read all admin profiles, others can only read their own
+      allow read: if isAuthenticated() &&
+                     (request.auth.uid == adminId || isAdmin());
+
+      // Admins can update their own profile
+      allow update: if isOwner(adminId) &&
+                       request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['title', 'department', 'bio', 'phone', 'avatar']);
+
+      // Super admins can modify any admin profile
+      allow update: if isSuperAdmin();
+
+      // Create: Admins only
+      allow create: if isAdmin() &&
+                      request.resource.data.adminId == request.auth.uid;
+
+      // Delete: Super admin only
+      allow delete: if isSuperAdmin();
+    }
+
+    // =========================================================================
+    // Settings Collection
+    // =========================================================================
+    
+    match /settings/{settingId} {
+      // Public read for public settings
+      allow read: if resource.data.isPublic == true ||
+                     isAuthenticated();
+
+      // Authenticated users can read their own settings
+      allow read: if isAuthenticated() &&
+                     resource.data.userId == request.auth.uid;
+
+      // Users can update their own settings
+      allow update: if isOwner(resource.data.userId) &&
+                       request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['preferences', 'notifications', 'privacy', 'updatedAt']);
+
+      // Super admins can read/update all settings
+      allow update: if isSuperAdmin();
+
+      // Create: Authenticated users only
+      allow create: if isAuthenticated() &&
+                      request.resource.data.userId == request.auth.uid;
+
+      // Delete: User can delete their own, super admin can delete any
+      allow delete: if isOwner(resource.data.userId) || isSuperAdmin();
+    }
+
+    // =========================================================================
+    // Configuration Collection
+    // =========================================================================
+    
+    match /configuration/{configId} {
+      // Public read for public configs
+      allow read: if resource.data.access == 'public' ||
+                     (isAuthenticated() && resource.data.access == 'authenticated') ||
+                     isAdmin();
+
+      // Admin only modifications
+      allow write: if isAdmin();
+
+      // Super admin can delete
+      allow delete: if isSuperAdmin();
+    }
+
+    // =========================================================================
+    // Activity Logs Collection (Read-only for security)
+    // =========================================================================
+    
+    match /activity_logs/{logId} {
+      // Admins can read all activity logs (check admin first)
+      allow read: if isAdmin();
+
+      // Users can read their own activity logs
+      allow read: if isAuthenticated() &&
+                     resource.data.userId == request.auth.uid;
+
+      // Cloud Functions create logs only
+      allow create: if false; // Only backend functions can write
+    }
+
+    // =========================================================================
+    // Audit Trail Collection (Read-only)
+    // =========================================================================
+    
+    match /audit_trail/{auditId} {
+      // Super admins can read audit trail
+      allow read: if isSuperAdmin();
+
+      // Only backend can write
+      allow write: if false;
+    }
+
+    // =========================================================================
+    // Customers Collection
+    // =========================================================================
+    // Customers created when registered users sign up from mobile app
+
+    match /customers/{customerId} {
+      // Customers can read their own profile, admins can read all
+      allow read: if request.auth.uid == customerId || isAdmin();
+
+      // Customers can create their own profile
+      allow create: if request.auth.uid == customerId;
+
+      // Customers can update their own profile, admins can update all
+      allow update: if request.auth.uid == customerId || isAdmin();
+
+      // Only admins can delete
+      allow delete: if isAdmin();
+    }
+
+    // =========================================================================
+    // Guests Collection
+    // =========================================================================
+    // Guest shipping requests (users without accounts)
+
+    match /guests/{guestId} {
+      // Only admins can read guest records
+      allow read: if isAdmin();
+
+      // Anyone can create guest records (for guest shipping requests)
+      allow create: if true;
+
+      // Only admins can update guest records
+      allow update: if isAdmin();
+
+      // Only admins can delete guest records
+      allow delete: if isAdmin();
+    }
+
+    // =========================================================================
+    // Invoices Collection
+    // =========================================================================
+
+    // Collection-level rule for list queries
+    match /invoices {
+      // Admins can list all invoices
+      allow read, list: if isAdmin();
+    }
+
+    // Document-level rules
+    match /invoices/{invoiceId} {
+      // Admins can read all invoices
+      allow read: if isAdmin();
+
+      // Admins can create/update invoices
+      allow create, update: if isAdmin();
+
+      // Only super admins can delete
+      allow delete: if isSuperAdmin();
+    }
+
+    // =========================================================================
+    // Public Invoice View (by accessToken, no auth required)
+    // =========================================================================
+
+    match /invoices_public/{invoiceId} {
+      // Allow read by accessToken only (for public invoice links)
+      allow read: if request.auth == null &&
+                     resource.data.accessToken == invoiceId;
+    }
+
+    // =========================================================================
+    // Shipping Requests Collection (shippingRequests)
+    // =========================================================================
+    
+    match /shippingRequests/{requestId} {
+      // Allow anyone to create shipping requests (guest users can request shipping)
+      allow create: if true;
+      
+      // Allow anyone to read (for tracking their shipment)
+      allow read: if true;
+      
+      // Only authenticated users (admins) can update/delete
+      allow update, delete: if isAuthenticated();
+    }
+
+    // Legacy shipments collection (kept for backward compatibility)
+    match /shipments/{shipmentId} {
+      allow read, write: if isAdmin();
+    }
+
+    // =========================================================================
+    // Affiliates Collection
+    // =========================================================================
+
+    // Collection-level rule for list/get all queries
+    match /affiliates {
+      // Admins can read/list all affiliates
+      allow read, list: if isAdmin();
+    }
+
+    // Document-level rules for individual documents
+    match /affiliates/{affiliateId} {
+      // Affiliates can read their own profile
+      allow read: if isAuthenticated() &&
+                     (resource.data.userId == request.auth.uid || isAdmin());
+
+      // Mobile app users can create affiliate registration (status must be pending)
+      allow create: if isAuthenticated() &&
+                       request.resource.data.status == 'pending' &&
+                       request.resource.data.userId == request.auth.uid;
+
+      // Only admins can update (approve/reject/suspend/edit)
+      allow update: if isAdmin();
+
+      // Only super admins can delete
+      allow delete: if isSuperAdmin();
+    }
+
+    // =========================================================================
+    // Payouts Collection
+    // =========================================================================
+    
+    match /payouts/{payoutId} {
+      // Affiliates can read their own payouts
+      // Admins can read all payouts
+      allow read: if isAuthenticated() &&
+                     (get(/databases/$(database)/documents/affiliates/$(resource.data.affiliateId)).data.userId == request.auth.uid || 
+                      isAdmin());
+      
+      // Only admins can create/update payouts
+      allow create, update: if isAdmin();
+      
+      // Only super admins can delete
+      allow delete: if isSuperAdmin();
+    }
+
+    match /commission_settings/{settingId} {
+      // Admins can read, only super admins can write
+      allow read: if isAdmin();
+      allow write: if isSuperAdmin();
+    }
+
+    match /tax_settings/{settingId} {
+      // Admins can read, only super admins can write
+      allow read: if isAdmin();
+      allow write: if isSuperAdmin();
+    }
+
+    // =========================================================================
+    // Analytics Collection
+    // =========================================================================
+    
+    match /analytics_events/{eventId} {
+      allow read, write: if isAdmin();
+    }
+
+    // =========================================================================
+    // Content Management Collections
+    // =========================================================================
+    
+    match /content_pages/{pageId} {
+      allow read, write: if isAdmin();
+    }
+
+    match /faqs/{faqId} {
+      allow read, write: if isAdmin();
+    }
+
+    match /banners/{bannerId} {
+      allow read, write: if isAdmin();
+    }
+
+    match /email_templates/{templateId} {
+      allow read, write: if isAdmin();
+    }
+
+    // =========================================================================
+    // Notifications Collection - IN-APP NOTIFICATIONS
+    // =========================================================================
+
+    // Collection-level rule for list queries
+    match /notifications {
+      allow read, list: if isAuthenticated() &&
+                         (resource.data.userId == request.auth.uid || isAdmin());
+    }
+
+    // Document-level rules
+    match /notifications/{notificationId} {
+      // Users can read their own notifications
+      allow read: if isAuthenticated() &&
+                     resource.data.userId == request.auth.uid;
+
+      // Admins can read all notifications
+      allow read: if isAdmin();
+
+      // Cloud Functions create notifications (mobile app sends via cloud function)
+      allow create: if isAuthenticated();
+
+      // Users can mark as read
+      allow update: if isAuthenticated() &&
+                       request.auth.uid == resource.data.userId &&
+                       request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['status', 'readAt', 'updatedAt']);
+
+      // Only admins can delete
+      allow delete: if isAdmin();
+    }
+
+    // =========================================================================
+    // Notification Preferences Collection
+    // =========================================================================
+
+    match /notification_preferences/{userId} {
+      allow read: if isAuthenticated() && request.auth.uid == userId;
+      allow write: if isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // =========================================================================
+    // Push Notifications - TEMPLATES AND CONFIG
+    // =========================================================================
+
+    // Collection-level rule for push_notifications
+    match /push_notifications {
+      allow read, list: if isAdmin();
+    }
+
+    match /push_notifications/{templateId} {
+      // Authenticated users can read templates
+      allow read: if isAuthenticated();
+
+      // Admins can create/update templates
+      allow create, update: if isAdmin();
+
+      // Super admin can delete
+      allow delete: if isSuperAdmin();
+    }
+
+    // =========================================================================
+    // Push Notification History Collection
+    // =========================================================================
+
+    match /push_notifications_history/{notificationId} {
+      allow read, list: if isAdmin();
+      allow create: if isAdmin();
+      allow update: if isAdmin();
+    }
+
+    // =========================================================================
+    // Notification Settings - USER PREFERENCES
+    // =========================================================================
+    
+    match /notification_settings/{userId} {
+      // Users can read their own settings
+      allow read: if isAuthenticated() &&
+                     request.auth.uid == userId;
+
+      // Users can update their own settings
+      allow update: if isAuthenticated() &&
+                       request.auth.uid == userId;
+
+      // Admins can read all settings
+      allow read: if isAdmin();
+
+      // Create during first signup or user preference setup
+      allow create: if isAuthenticated() &&
+                       request.auth.uid == userId;
+
+      // Super admin can delete
+      allow delete: if isSuperAdmin();
+    }
+
+    // =========================================================================
+    // Deny All By Default
+    // =========================================================================
+    
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

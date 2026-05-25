@@ -1,0 +1,13 @@
+Uncaught exception Error: listen EADDRINUSE: address already in use :::3000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at Function.listen (C:\projects\shopsnports\server\node_modules\express\lib\application.js:635:24)
+    at Object.<anonymous> (C:\projects\shopsnports\server\index.js:271:20)
+    at Module._compile (node:internal/modules/cjs/loader:1688:14)
+    at Object..js (node:internal/modules/cjs/loader:1820:10)
+    at Module.load (node:internal/modules/cjs/loader:1423:32)
+    at Function._load (node:internal/modules/cjs/loader:1246:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+Error closing HTTP server Server is not running.
+pg init failed Cannot use a pool after calling end on the pool

@@ -1,0 +1,123 @@
+name: Deploy (OIDC)
+
+# This workflow demonstrates using GitHub Actions OIDC to assume an AWS role
+# Replace placeholders ({{AWS_ACCOUNT_ID}} and region or role name) before use.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy to AWS (OIDC)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          # Replace with the role ARN created by Terraform, e.g. arn:aws:iam::123456789012:role/shopsnports-github-deploy-role
+          # You can inject this as a repository secret (e.g., DEPLOY_ROLE_ARN) or derive it from terraform outputs if you store infra here.
+          role-to-assume: ${{ secrets.DEPLOY_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Show caller identity (verify assume-role)
+        run: aws sts get-caller-identity
+      # Build and push Docker image to ECR, then register task definition and update ECS service
+      - name: Set deploy variables
+        run: |
+          echo "ECR_REPO=${{ secrets.ECR_REPO }}" >> $GITHUB_ENV
+          echo "ECS_CLUSTER=${{ secrets.ECS_CLUSTER }}" >> $GITHUB_ENV
+          echo "ECS_SERVICE=${{ secrets.ECS_SERVICE }}" >> $GITHUB_ENV
+          echo "CONTAINER_NAME=${{ secrets.CONTAINER_NAME }}" >> $GITHUB_ENV
+          echo "AWS_REGION=${{ secrets.AWS_REGION || 'us-east-1' }}" >> $GITHUB_ENV
+
+      - name: Build Docker image
+        run: |
+          docker build -t $ECR_REPO:${{ github.sha }} -f server/Dockerfile .
+
+      - name: Login to ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Tag and push image
+        run: |
+          docker tag $ECR_REPO:${{ github.sha }} $ECR_REPO:latest
+          docker push $ECR_REPO:${{ github.sha }}
+          docker push $ECR_REPO:latest
+
+      - name: Install jq
+        run: |
+          sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Register new ECS task definition
+        env:
+          AWS_REGION: ${{ env.AWS_REGION }}
+          ECR_REPO: ${{ env.ECR_REPO }}
+          CONTAINER_NAME: ${{ env.CONTAINER_NAME }}
+        run: |
+          set -euo pipefail
+          # Try to fetch the latest registered task definition for the family
+          TD=$(aws ecs describe-task-definition --task-definition ${CONTAINER_NAME} --query 'taskDefinition' --output json || true)
+          if [ -z "$TD" ] || [ "$TD" = "null" ]; then
+            echo "No existing task definition found for family ${CONTAINER_NAME}, registering a minimal taskdef"
+            cat > taskdef.json <<EOF
+{
+  "family": "${CONTAINER_NAME}",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "containerDefinitions": [
+    {
+      "name": "${CONTAINER_NAME}",
+      "image": "${ECR_REPO}:${{ github.sha }}",
+      "essential": true,
+      "portMappings": [{ "containerPort": 3000, "protocol": "tcp" }],
+      "logConfiguration": { "logDriver": "awslogs", "options": { "awslogs-group": "/ecs/shopsnports-staging", "awslogs-region": "${{ env.AWS_REGION }}", "awslogs-stream-prefix": "ecs" } }
+    }
+  ]
+}
+EOF
+            aws ecs register-task-definition --cli-input-json file://taskdef.json
+          else
+            echo "Existing task definition found; creating a new revision with updated image"
+            # Remove fields that are not accepted by register-task-definition input
+            echo "$TD" > td_raw.json
+            # Strip runtime fields
+            jq 'del(.status, .revision, .requiresAttributes, .compatibilities, .registeredAt, .registeredBy, .taskDefinitionArn, .compatibilities)' td_raw.json > td_clean.json
+            # Replace image for the first container matching CONTAINER_NAME
+            jq --arg img "${ECR_REPO}:${{ github.sha }}" --arg name "${CONTAINER_NAME}" '(.containerDefinitions[] | select(.name==$name) | .image) |= $img' td_clean.json > td_updated.json
+            # Register the updated task definition
+            aws ecs register-task-definition --cli-input-json file://td_updated.json
+          fi
+
+      - name: Update ECS service to use new task definition
+        env:
+          AWS_REGION: ${{ env.AWS_REGION }}
+          ECS_CLUSTER: ${{ env.ECS_CLUSTER }}
+          ECS_SERVICE: ${{ env.ECS_SERVICE }}
+        run: |
+          NEW_DEF_ARN=$(aws ecs list-task-definitions --family-prefix ${CONTAINER_NAME} --sort DESC --max-items 1 --query 'taskDefinitionArns[0]' --output text)
+          echo "Updating service to use task definition $NEW_DEF_ARN"
+          aws ecs update-service --cluster $ECS_CLUSTER --service $ECS_SERVICE --task-definition $NEW_DEF_ARN
+
+      - name: Optional: Run Terraform (if you store infra in repo)
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          TF_IN_AUTOMATION: 1
+        run: |
+          echo "If you plan to run terraform here, configure backend and required inputs first."
+          # cd server/infra && terraform init && terraform plan
+
+# Notes for use:
+#  - Ensure the IAM role's trust policy allows token.actions.githubusercontent.com with the repository scope.
+#  - Replace the role-to-assume ARN above with the role created in Terraform (output deploy_role_arn).
+#  - The workflow sets id-token: write permission which is required for OIDC.
+#  - For production, use branch filtering and approval gates (e.g., manual approval for main deploys).

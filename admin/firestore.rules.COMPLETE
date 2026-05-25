@@ -1,0 +1,384 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // =========================================================================
+    // HELPER FUNCTIONS
+    // =========================================================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && 
+             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['admin', 'super_admin'];
+    }
+
+    function isSuperAdmin() {
+      return isAuthenticated() && 
+             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'super_admin';
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // =========================================================================
+    // SHIPMENTS COLLECTION (CORE BUSINESS - AIR & SEA FREIGHT)
+    // =========================================================================
+    
+    match /shipments/{shipmentId} {
+      // Mobile app users can create their own shipments
+      allow create: if isAuthenticated() &&
+                      request.resource.data.userId == request.auth.uid &&
+                      request.resource.data.keys().hasAll(['userId', 'origin', 'destination', 'cargoType', 'weight']) &&
+                      request.resource.data.cargoType in ['air_general', 'air_express', 'air_perishable', 
+                                                           'sea_fcl', 'sea_lcl', 'sea_bulk', 'sea_roro',
+                                                           'specialised', 'hazardous', 'fragile', 'documents'];
+      
+      // Users can read their own shipments, affiliates can read referred shipments, admins can read all
+      allow read: if isAuthenticated() &&
+                    (resource.data.userId == request.auth.uid || 
+                     resource.data.affiliateId == request.auth.uid ||
+                     isAdmin());
+      
+      // Admins can update shipments (status, tracking number, estimated delivery, etc.)
+      allow update: if isAdmin() &&
+                       (!request.resource.data.diff(resource.data).changedKeys().hasAny(['userId', 'createdAt']));
+      
+      // Only super admins can delete shipments
+      allow delete: if isSuperAdmin();
+    }
+
+    // =========================================================================
+    // CUSTOMERS COLLECTION (MOBILE APP USERS)
+    // =========================================================================
+    
+    match /customers/{customerId} {
+      // Users can read their own profile, admins can read all
+      allow read: if isAuthenticated() &&
+                    (request.auth.uid == customerId || isAdmin());
+      
+      // Users can create their own profile when signing up via mobile app
+      allow create: if isAuthenticated() &&
+                      request.auth.uid == customerId &&
+                      request.resource.data.keys().hasAll(['email', 'createdAt']) &&
+                      request.resource.data.customerType in ['registered', 'affiliate', 'guest'];
+      
+      // Users can update their own profile (limited fields)
+      allow update: if isOwner(customerId) &&
+                       request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['name', 'phone', 'photoUrl', 'addresses', 'preferences', 'updatedAt']) &&
+                       (!request.resource.data.diff(resource.data).changedKeys().hasAny(['email', 'customerType', 'createdAt']));
+      
+      // Admins can update customer status, type, and all fields
+      allow update: if isAdmin();
+      
+      // Only super admins can delete customers
+      allow delete: if isSuperAdmin();
+    }
+
+    // =========================================================================
+    // AFFILIATES COLLECTION (MARKETING PARTNERS)
+    // =========================================================================
+    
+    match /affiliates/{affiliateId} {
+      // Affiliates can read their own data, admins can read all
+      allow read: if isAuthenticated() &&
+                    (request.auth.uid == affiliateId || isAdmin());
+      
+      // Admins can create affiliates
+      allow create: if isAdmin() &&
+                      request.resource.data.keys().hasAll(['name', 'email', 'affiliateCode', 'commissionRate', 'status']) &&
+                      request.resource.data.affiliateCode.matches('^[A-Z0-9]{6,12}$') &&
+                      request.resource.data.commissionRate >= 0 &&
+                      request.resource.data.commissionRate <= 100;
+      
+      // Affiliates can update limited fields (contact info, banking), admins can update all
+      allow update: if (isOwner(affiliateId) &&
+                        request.resource.data.diff(resource.data).affectedKeys()
+                          .hasOnly(['name', 'phone', 'bankDetails', 'photoUrl', 'updatedAt']) &&
+                        (!request.resource.data.diff(resource.data).changedKeys().hasAny(['email', 'affiliateCode', 'commissionRate']))) ||
+                       isAdmin();
+      
+      // Only super admins can delete affiliates
+      allow delete: if isSuperAdmin();
+    }
+
+    // =========================================================================
+    // INVOICES COLLECTION (BILLING & PAYMENTS)
+    // =========================================================================
+    
+    match /invoices/{invoiceId} {
+      // Customers can read their own invoices, admins can read all
+      allow read: if isAuthenticated() &&
+                    (resource.data.customerId == request.auth.uid || isAdmin());
+      
+      // Only admins can create and update invoices
+      allow create: if isAdmin() &&
+                      request.resource.data.keys().hasAll(['customerId', 'invoiceNumber', 'amount', 'status', 'createdAt']) &&
+                      request.resource.data.status in ['draft', 'sent', 'paid', 'overdue', 'cancelled'];
+      
+      allow update: if isAdmin() &&
+                       (!request.resource.data.diff(resource.data).changedKeys().hasAny(['invoiceNumber', 'createdAt']));
+      
+      // Only super admins can delete invoices
+      allow delete: if isSuperAdmin();
+    }
+
+    // =========================================================================
+    // PAYOUTS COLLECTION (AFFILIATE COMMISSIONS)
+    // =========================================================================
+    
+    match /payouts/{payoutId} {
+      // Affiliates can read their own payouts, admins can read all
+      allow read: if isAuthenticated() &&
+                    (resource.data.affiliateId == request.auth.uid || isAdmin());
+      
+      // Only admins can create and process payouts
+      allow create: if isAdmin() &&
+                      request.resource.data.keys().hasAll(['affiliateId', 'amount', 'status', 'periodStart', 'periodEnd', 'createdAt']) &&
+                      request.resource.data.status in ['pending', 'processing', 'completed', 'failed', 'cancelled'] &&
+                      request.resource.data.amount > 0;
+      
+      allow update: if isAdmin() &&
+                       request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['status', 'processedAt', 'transactionId', 'notes', 'updatedAt']);
+      
+      // Only super admins can delete payouts
+      allow delete: if isSuperAdmin();
+    }
+
+    // =========================================================================
+    // NOTIFICATIONS COLLECTION (USER NOTIFICATIONS)
+    // =========================================================================
+    
+    match /notifications/{notificationId} {
+      // Users can read their own notifications, admins can read all
+      allow read: if isAuthenticated() &&
+                    (resource.data.userId == request.auth.uid || isAdmin());
+      
+      // Admins create notifications, system can also create via backend
+      allow create: if isAdmin() &&
+                      request.resource.data.keys().hasAll(['userId', 'title', 'message', 'type', 'createdAt']) &&
+                      request.resource.data.type in ['info', 'warning', 'success', 'error', 'shipment_update', 'payout', 'invoice'];
+      
+      // Users can mark notifications as read, admins can update all fields
+      allow update: if (isOwner(resource.data.userId) &&
+                        request.resource.data.diff(resource.data).affectedKeys()
+                          .hasOnly(['read', 'readAt'])) ||
+                       isAdmin();
+      
+      // Only super admins can delete notifications
+      allow delete: if isSuperAdmin();
+    }
+
+    // =========================================================================
+    // PUSH NOTIFICATIONS HISTORY (ADMIN TRACKING)
+    // =========================================================================
+    
+    match /push_notifications/{notificationId} {
+      // Only admins can read/write push notification history
+      allow read: if isAdmin();
+      
+      allow create: if isAdmin() &&
+                      request.resource.data.keys().hasAll(['title', 'message', 'sentBy', 'sentAt', 'recipientCount']);
+      
+      allow update: if isAdmin() &&
+                       request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['deliveredCount', 'failedCount', 'status', 'updatedAt']);
+      
+      // Only super admins can delete
+      allow delete: if isSuperAdmin();
+    }
+
+    // =========================================================================
+    // BANNERS COLLECTION (CONTENT MANAGEMENT)
+    // =========================================================================
+    
+    match /banners/{bannerId} {
+      // Public can read published banners, admins can read all
+      allow read: if resource.data.status == 'published' || isAdmin();
+      
+      // Only admins can create/update banners
+      allow create: if isAdmin() &&
+                      request.resource.data.keys().hasAll(['title', 'imageUrl', 'status', 'createdAt']) &&
+                      request.resource.data.status in ['draft', 'published', 'archived'];
+      
+      allow update: if isAdmin() &&
+                       (!request.resource.data.diff(resource.data).changedKeys().hasAny(['createdAt', 'createdBy']));
+      
+      // Only super admins can delete banners
+      allow delete: if isSuperAdmin();
+    }
+
+    // =========================================================================
+    // NEWS TICKER COLLECTION (ADMIN-ONLY POSTS)
+    // =========================================================================
+    
+    match /news_ticker/{newsId} {
+      // Public read access for published items, authenticated users can read scheduled, admins can read all
+      allow read: if (resource.data.status == 'published') ||
+                     (isAuthenticated() && resource.data.status in ['published', 'scheduled']) ||
+                     isAdmin();
+
+      // Create: Admin only with validation
+      allow create: if isAdmin() &&
+                      request.resource.data.status in ['draft', 'scheduled', 'published'] &&
+                      request.resource.data.priority >= 1 &&
+                      request.resource.data.priority <= 10 &&
+                      request.resource.data.keys().hasAll(['title', 'content', 'status', 'priority', 'createdAt', 'createdBy']) &&
+                      request.resource.data.title.size() > 0 &&
+                      request.resource.data.content.size() > 0;
+
+      // Update: Admin only, with validation
+      allow update: if isAdmin() &&
+                      (request.resource.data.diff(resource.data).affectedKeys()
+                        .hasOnly(['title', 'content', 'imageUrl', 'priority', 'status', 
+                                 'expiresAt', 'publishedAt', 'updatedAt', 'updatedBy'])) &&
+                      (!request.resource.data.diff(resource.data).changedKeys().hasAny(['createdBy', 'createdAt']));
+
+      // Delete: Super Admin only
+      allow delete: if isSuperAdmin();
+    }
+
+    // =========================================================================
+    // USERS COLLECTION (AUTHENTICATION & ROLES)
+    // =========================================================================
+    
+    match /users/{userId} {
+      // Users can read their own profile and basic info, admins can read all
+      allow read: if isAuthenticated() &&
+                     (request.auth.uid == userId || isAdmin());
+
+      // Users can update their own profile (limited fields)
+      allow update: if isOwner(userId) &&
+                       request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['displayName', 'photoUrl', 'phone', 'preferences', 'updatedAt']) &&
+                       !request.resource.data.diff(resource.data).changedKeys()
+                         .hasAny(['role', 'permissions', 'email', 'createdAt']);
+
+      // Super admins can update role and permissions
+      allow update: if isSuperAdmin() &&
+                       request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['role', 'permissions', 'accountStatus', 'twoFactorEnabled', 'updatedAt']);
+
+      // Create: New users during signup (handled by Cloud Functions auth trigger)
+      allow create: if false; // Auth trigger creates user documents
+
+      // Delete: Super admin only
+      allow delete: if isSuperAdmin();
+    }
+
+    // =========================================================================
+    // ADMIN PROFILES COLLECTION
+    // =========================================================================
+    
+    match /admin_profiles/{adminId} {
+      // Admins can read all admin profiles, others can only read their own
+      allow read: if isAuthenticated() &&
+                     (request.auth.uid == adminId || isAdmin());
+
+      // Admins can update their own profile
+      allow update: if isOwner(adminId) &&
+                       request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['title', 'department', 'bio', 'phone', 'avatar', 'updatedAt']);
+
+      // Super admins can modify any admin profile
+      allow update: if isSuperAdmin();
+
+      // Create: Admins only
+      allow create: if isAdmin() &&
+                      request.resource.data.adminId == request.auth.uid;
+
+      // Delete: Super admin only
+      allow delete: if isSuperAdmin();
+    }
+
+    // =========================================================================
+    // SETTINGS COLLECTION
+    // =========================================================================
+    
+    match /settings/{settingId} {
+      // Public read for public settings
+      allow read: if resource.data.isPublic == true ||
+                     isAuthenticated();
+
+      // Authenticated users can read their own settings
+      allow read: if isAuthenticated() &&
+                     resource.data.userId == request.auth.uid;
+
+      // Users can update their own settings
+      allow update: if isOwner(resource.data.userId) &&
+                       request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['preferences', 'notifications', 'privacy', 'updatedAt']);
+
+      // Super admins can read/update all settings
+      allow update: if isSuperAdmin();
+
+      // Create: Authenticated users only
+      allow create: if isAuthenticated() &&
+                      request.resource.data.userId == request.auth.uid;
+
+      // Delete: User can delete their own, super admin can delete any
+      allow delete: if isOwner(resource.data.userId) || isSuperAdmin();
+    }
+
+    // =========================================================================
+    // CONFIGURATION COLLECTION (SYSTEM SETTINGS)
+    // =========================================================================
+    
+    match /configuration/{configId} {
+      // Public read for public configs
+      allow read: if resource.data.access == 'public' ||
+                     (isAuthenticated() && resource.data.access == 'authenticated') ||
+                     isAdmin();
+
+      // Admin only modifications
+      allow write: if isAdmin();
+
+      // Super admin can delete
+      allow delete: if isSuperAdmin();
+    }
+
+    // =========================================================================
+    // ACTIVITY LOGS COLLECTION (READ-ONLY FOR SECURITY)
+    // =========================================================================
+    
+    match /activity_logs/{logId} {
+      // Users can read their own activity logs
+      allow read: if isAuthenticated() &&
+                     resource.data.userId == request.auth.uid;
+
+      // Admins can read all activity logs
+      allow read: if isAdmin();
+
+      // Cloud Functions create logs only (no direct writes)
+      allow create: if false; // Only backend functions can write
+    }
+
+    // =========================================================================
+    // AUDIT TRAIL COLLECTION (SUPER ADMIN ONLY)
+    // =========================================================================
+    
+    match /audit_trail/{auditId} {
+      // Super admins can read audit trail
+      allow read: if isSuperAdmin();
+
+      // Only backend can write
+      allow write: if false;
+    }
+
+    // =========================================================================
+    // DEFAULT DENY ALL (SECURITY BEST PRACTICE)
+    // =========================================================================
+    
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

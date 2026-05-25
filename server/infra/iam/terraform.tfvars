@@ -1,0 +1,8 @@
+﻿aws_account_id = "119495459751"
+region = "us-east-1"
+github_org = "your-org"
+github_repo = "shopsnports"
+ecs_cluster_arn = ""
+ecs_service_arn = ""
+task_role_arn = ""
+execution_role_arn = ""

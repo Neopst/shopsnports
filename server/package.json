@@ -1,0 +1,43 @@
+{
+  "name": "shopsnports-pay-server",
+  "version": "0.1.0",
+  "description": "Example Node/Express server to create Stripe PaymentIntents for ShopsNports (example only)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "migrate:pg": "node migrate-to-postgres.js",
+    "migrate": "node-pg-migrate up",
+    "build:admin": "esbuild src/admin/main.tsx --bundle --minify --sourcemap --outfile=public/admin/build/bundle.js --loader:.tsx=tsx --loader:.ts=ts --define:process.env.NODE_ENV='\"production\"'"
+  },
+  "scripts-dev": {
+    "e2e": "playwright test --config=e2e/playwright.config.ts"
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^8.1.6",
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "compression": "^1.8.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-rate-limit": "^6.11.2",
+    "express-session": "^1.17.4",
+    "firebase-admin": "^13.5.0",
+    "helmet": "^6.2.0",
+    "minimist": "^1.2.8",
+    "morgan": "^1.10.1",
+    "node-fetch": "^2.6.7",
+    "pg": "^8.11.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "resend": "^6.6.0",
+    "stripe": "^12.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "esbuild": "^0.25.10",
+    "node-pg-migrate": "^7.5.0",
+    "playwright": "^1.56.1"
+  }
+}

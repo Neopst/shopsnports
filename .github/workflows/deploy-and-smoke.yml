@@ -1,0 +1,42 @@
+name: Deploy Firestore & Run Smoke Tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-and-test:
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_STAGING: ${{ secrets.PROJECT_ID_STAGING }}
+      PROJECT_PRODUCTION: ${{ secrets.PROJECT_ID_PRODUCTION }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Firebase Tools
+        run: npm install -g firebase-tools@11
+
+      - name: Deploy rules & indexes to staging
+        if: ${{ secrets.FIREBASE_TOKEN != '' && secrets.PROJECT_ID_STAGING != '' }}
+        run: |
+          firebase deploy --only firestore:rules,firestore:indexes --project $PROJECT_STAGING --token ${{ secrets.FIREBASE_TOKEN }}
+
+      - name: Optionally run smoke test against staging
+        if: ${{ secrets.GCP_SA_JSON != '' && secrets.PROJECT_ID_STAGING != '' }}
+        run: |
+          mkdir -p workspace && cd workspace
+          echo "${{ secrets.GCP_SA_JSON }}" > sa.json
+          cd ..
+          cd scripts
+          npm ci
+          node smoke_test_full.js --key ../workspace/sa.json --project $PROJECT_STAGING --password "${{ secrets.TEST_USER_PASSWORD }}" --apikey "${{ secrets.WEB_API_KEY_STAGING }}"
+
+      - name: Deploy rules & indexes to production
+        if: ${{ secrets.FIREBASE_TOKEN != '' && secrets.PROJECT_ID_PRODUCTION != '' }}
+        run: |
+          firebase deploy --only firestore:rules,firestore:indexes --project $PROJECT_PRODUCTION --token ${{ secrets.FIREBASE_TOKEN }}

@@ -1,0 +1,297 @@
+import 'package:admin_dashboard/features/admin_profile/data/models/index.dart';
+import 'package:admin_dashboard/features/admin_profile/data/repositories/index.dart';
+import 'package:riverpod/riverpod.dart';
+
+// Repository provider (using mock implementation)
+final adminProfileRepositoryProvider = Provider<IAdminProfileRepository>((ref) {
+  return AdminProfileRepositoryMock();
+});
+
+// Admin User Providers
+final allAdminsProvider = FutureProvider<List<AdminUser>>((ref) async {
+  final repo = ref.watch(adminProfileRepositoryProvider);
+  return repo.getAllAdmins();
+});
+
+final adminByIdProvider = FutureProvider.family<AdminUser?, String>((
+  ref,
+  adminId,
+) async {
+  final repo = ref.watch(adminProfileRepositoryProvider);
+  return repo.getAdminById(adminId);
+});
+
+final adminByEmailProvider = FutureProvider.family<AdminUser?, String>((
+  ref,
+  email,
+) async {
+  final repo = ref.watch(adminProfileRepositoryProvider);
+  return repo.getAdminByEmail(email);
+});
+
+final searchAdminsProvider = FutureProvider.family<List<AdminUser>, String>((
+  ref,
+  query,
+) async {
+  final repo = ref.watch(adminProfileRepositoryProvider);
+  return repo.searchAdmins(query);
+});
+
+final adminCountProvider = FutureProvider<int>((ref) async {
+  final repo = ref.watch(adminProfileRepositoryProvider);
+  return repo.getAdminCount();
+});
+
+final adminsByRoleProvider = FutureProvider.family<List<AdminUser>, String>((
+  ref,
+  role,
+) async {
+  final repo = ref.watch(adminProfileRepositoryProvider);
+  return repo.getAdminsByRole(role);
+});
+
+final superAdminsProvider = FutureProvider<List<AdminUser>>((ref) async {
+  return ref.watch(adminsByRoleProvider('superAdmin').future);
+});
+
+final regularAdminsProvider = FutureProvider<List<AdminUser>>((ref) async {
+  return ref.watch(adminsByRoleProvider('admin').future);
+});
+
+final managersProvider = FutureProvider<List<AdminUser>>((ref) async {
+  return ref.watch(adminsByRoleProvider('manager').future);
+});
+
+final updateAdminProvider = FutureProvider.family<void, (String, AdminUser)>((
+  ref,
+  params,
+) async {
+  final repo = ref.watch(adminProfileRepositoryProvider);
+  final (adminId, admin) = params;
+  await repo.updateAdmin(adminId, admin);
+  ref.invalidate(adminByIdProvider(adminId));
+  ref.invalidate(allAdminsProvider);
+});
+
+final suspendAdminProvider = FutureProvider.family<void, (String, String)>((
+  ref,
+  params,
+) async {
+  final repo = ref.watch(adminProfileRepositoryProvider);
+  final (adminId, reason) = params;
+  await repo.suspendAdmin(adminId, reason);
+  ref.invalidate(adminByIdProvider(adminId));
+  ref.invalidate(allAdminsProvider);
+});
+
+final reactivateAdminProvider = FutureProvider.family<void, String>((
+  ref,
+  adminId,
+) async {
+  final repo = ref.watch(adminProfileRepositoryProvider);
+  await repo.reactivateAdmin(adminId);
+  ref.invalidate(adminByIdProvider(adminId));
+  ref.invalidate(allAdminsProvider);
+});
+
+final resetAdminPasswordProvider = FutureProvider.family<void, String>((
+  ref,
+  adminId,
+) async {
+  final repo = ref.watch(adminProfileRepositoryProvider);
+  await repo.resetAdminPassword(adminId);
+  ref.invalidate(adminByIdProvider(adminId));
+});
+
+final updateAdminRoleProvider = FutureProvider.family<void, (String, String)>((
+  ref,
+  params,
+) async {
+  final repo = ref.watch(adminProfileRepositoryProvider);
+  final (adminId, newRole) = params;
+  await repo.updateAdminRole(adminId, newRole);
+  ref.invalidate(adminByIdProvider(adminId));
+  ref.invalidate(allAdminsProvider);
+  ref.invalidate(adminsByRoleProvider);
+});
+
+final updateAdminPermissionsProvider =
+    FutureProvider.family<void, (String, List<String>)>((ref, params) async {
+      final repo = ref.watch(adminProfileRepositoryProvider);
+      final (adminId, permissions) = params;
+      await repo.updateAdminPermissions(adminId, permissions);
+      ref.invalidate(adminByIdProvider(adminId));
+      ref.invalidate(allAdminsProvider);
+    });
+
+// Admin Registration Providers
+final pendingRegistrationsProvider =
+    FutureProvider<List<AdminRegistrationRequest>>((ref) async {
+      final repo = ref.watch(adminProfileRepositoryProvider);
+      return repo.getPendingRegistrations();
+    });
+
+final registrationRequestProvider =
+    FutureProvider.family<AdminRegistrationRequest?, String>((
+      ref,
+      requestId,
+    ) async {
+      final repo = ref.watch(adminProfileRepositoryProvider);
+      return repo.getRegistrationRequest(requestId);
+    });
+
+final createRegistrationProvider =
+    FutureProvider.family<AdminRegistrationRequest, AdminRegistrationRequest>((
+      ref,
+      request,
+    ) async {
+      final repo = ref.watch(adminProfileRepositoryProvider);
+      final created = await repo.createRegistrationRequest(request);
+      ref.invalidate(pendingRegistrationsProvider);
+      return created;
+    });
+
+final approveRegistrationProvider =
+    FutureProvider.family<void, (String, String)>((ref, params) async {
+      final repo = ref.watch(adminProfileRepositoryProvider);
+      final (requestId, approvedBy) = params;
+      await repo.approveRegistration(requestId, approvedBy);
+      ref.invalidate(pendingRegistrationsProvider);
+      ref.invalidate(registrationRequestProvider(requestId));
+    });
+
+final rejectRegistrationProvider =
+    FutureProvider.family<void, (String, String)>((ref, params) async {
+      final repo = ref.watch(adminProfileRepositoryProvider);
+      final (requestId, reason) = params;
+      await repo.rejectRegistration(requestId, reason);
+      ref.invalidate(pendingRegistrationsProvider);
+      ref.invalidate(registrationRequestProvider(requestId));
+    });
+
+final completeRegistrationProvider =
+    FutureProvider.family<void, (String, String)>((ref, params) async {
+      final repo = ref.watch(adminProfileRepositoryProvider);
+      final (requestId, userId) = params;
+      await repo.completeRegistration(requestId, userId);
+      ref.invalidate(pendingRegistrationsProvider);
+      ref.invalidate(registrationRequestProvider(requestId));
+      ref.invalidate(allAdminsProvider);
+    });
+
+// Activity Log Providers
+final activityLogProvider = FutureProvider.family<List<AdminActivity>, String>((
+  ref,
+  adminId,
+) async {
+  final repo = ref.watch(adminProfileRepositoryProvider);
+  return repo.getActivityLog(adminId);
+});
+
+final activityByResourceProvider =
+    FutureProvider.family<List<AdminActivity>, (String, String)>((
+      ref,
+      params,
+    ) async {
+      final repo = ref.watch(adminProfileRepositoryProvider);
+      final (resourceType, resourceId) = params;
+      return repo.getActivityByResource(resourceType, resourceId);
+    });
+
+final activitySummaryProvider = FutureProvider.family<Map<String, int>, String>(
+  (ref, adminId) async {
+    final repo = ref.watch(adminProfileRepositoryProvider);
+    return repo.getActivitySummary(adminId);
+  },
+);
+
+final searchActivitiesProvider =
+    FutureProvider.family<List<AdminActivity>, String>((ref, query) async {
+      final repo = ref.watch(adminProfileRepositoryProvider);
+      return repo.searchActivities(query);
+    });
+
+// Security Providers
+final adminLockedProvider = FutureProvider.family<bool, String>((
+  ref,
+  adminId,
+) async {
+  final repo = ref.watch(adminProfileRepositoryProvider);
+  return repo.isAdminLocked(adminId);
+});
+
+final recordFailedLoginProvider = FutureProvider.family<void, String>((
+  ref,
+  adminId,
+) async {
+  final repo = ref.watch(adminProfileRepositoryProvider);
+  await repo.recordFailedLoginAttempt(adminId);
+  ref.invalidate(adminLockedProvider(adminId));
+  ref.invalidate(adminByIdProvider(adminId));
+});
+
+final recordSuccessfulLoginProvider = FutureProvider.family<void, String>((
+  ref,
+  adminId,
+) async {
+  final repo = ref.watch(adminProfileRepositoryProvider);
+  await repo.recordSuccessfulLogin(adminId);
+  ref.invalidate(adminLockedProvider(adminId));
+  ref.invalidate(adminByIdProvider(adminId));
+});
+
+final enable2FAProvider = FutureProvider.family<void, (String, String)>((
+  ref,
+  params,
+) async {
+  final repo = ref.watch(adminProfileRepositoryProvider);
+  final (adminId, phoneNumber) = params;
+  await repo.enable2FA(adminId, phoneNumber);
+  ref.invalidate(adminByIdProvider(adminId));
+});
+
+final disable2FAProvider = FutureProvider.family<void, String>((
+  ref,
+  adminId,
+) async {
+  final repo = ref.watch(adminProfileRepositoryProvider);
+  await repo.disable2FA(adminId);
+  ref.invalidate(adminByIdProvider(adminId));
+});
+
+final verifyAdminEmailProvider = FutureProvider.family<void, String>((
+  ref,
+  adminId,
+) async {
+  final repo = ref.watch(adminProfileRepositoryProvider);
+  await repo.verifyAdminEmail(adminId);
+  ref.invalidate(adminByIdProvider(adminId));
+});
+
+// Export admin list provider
+final exportAdminListProvider = FutureProvider<List<String>>((ref) async {
+  final repo = ref.watch(adminProfileRepositoryProvider);
+  return repo.exportAdminList();
+});
+
+// Derived providers
+final activeAdminsProvider = FutureProvider<List<AdminUser>>((ref) async {
+  final admins = await ref.watch(allAdminsProvider.future);
+  return admins.where((admin) => admin.status == AdminStatus.active).toList();
+});
+
+final suspendedAdminsProvider = FutureProvider<List<AdminUser>>((ref) async {
+  final admins = await ref.watch(allAdminsProvider.future);
+  return admins
+      .where((admin) => admin.status == AdminStatus.suspended)
+      .toList();
+});
+
+final pendingApprovalAdminsProvider = FutureProvider<List<AdminUser>>((
+  ref,
+) async {
+  final admins = await ref.watch(allAdminsProvider.future);
+  return admins
+      .where((admin) => admin.status == AdminStatus.pendingApproval)
+      .toList();
+});
