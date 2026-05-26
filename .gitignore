@@ -65,3 +65,17 @@ functions/node_modules
 
 # Node
 node_modules/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!example.tfvars
+terraform_*.zip
+terraform-provider-*.exe
+
+# Deployment artifacts
+firebase-functions-deploy.zip
+zi4XFkhF
+*.zip
