@@ -36,4 +36,4 @@ jobs:
           credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
       - name: Deploy to Firebase
-        run: firebase deploy --only functions:sendEmail,functions:sendAffiliateEmail --project shopsnports
+        run: firebase deploy --only functions:sendEmail,functions:sendAffiliateEmail --project shopsnports --force
